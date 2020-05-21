@@ -5,14 +5,15 @@ package com.workattendance.Repository.entity;
 public class Leave {
 
     private int id;
-    private String empNo;
-    private String empName;
-    private String type;
-    private String startTime;
-    private String endTime;
+    private int emp_no;
+    private int type;
+    private String start_time;
+    private String end_time;
     private String reason;
-    private String state;
-    private String opinion;
+    private boolean state;
+    private boolean division_manager_state;
+    private boolean vice_manager_state;
+    private boolean manager_state;
 
     public int getId() {
         return id;
@@ -22,44 +23,34 @@ public class Leave {
         this.id = id;
     }
 
-    public String getEmpNo() {
-        return empNo;
+    public int getEmp_no() {
+        return emp_no;
     }
 
-    public void setEmpNo(String empNo) {
-        this.empNo = empNo;
+    public void setEmp_no(int emp_no) {
+        this.emp_no = emp_no;
     }
 
-    public String getEmpName() {
-        return empName;
-    }
+    public int getType(){return type;}
 
-    public void setEmpName(String empName) {
-        this.empName = empName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getStart_time() {
+        return start_time;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEnd_time() {
+        return end_time;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
     }
 
     public String getReason() {
@@ -70,19 +61,29 @@ public class Leave {
         this.reason = reason;
     }
 
-    public String getState() {
+    public boolean getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 
-    public String getOpinion() {
-        return opinion;
+    public boolean getDivision_manager_state(){return division_manager_state;}
+
+    public void setDivision_manager_state(boolean division_manager_state){
+        this.division_manager_state = division_manager_state;
     }
 
-    public void setOpinion(String opinion) {
-        this.opinion = opinion;
+    public boolean getVice_manager_state(){return vice_manager_state;}
+
+    public void setVice_manager_state(boolean vice_manager_state){
+        this.vice_manager_state = vice_manager_state;
+    }
+
+    public boolean getManager_state(){return manager_state;}
+
+    public void setManager_state(boolean manager_state){
+        this.manager_state = manager_state;
     }
 }

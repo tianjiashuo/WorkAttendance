@@ -2,12 +2,21 @@ package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.GoOutDao;
 import com.workattendance.Repository.entity.GoOut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GoOutService {
 
+    @Autowired
     private GoOutDao goOutDao;
+
+    //ceshi
+    public String test(){
+        return "test";
+    }
 
     //外出申请
     public GoOut inserGoOut(GoOut goOut){
@@ -16,7 +25,7 @@ public class GoOutService {
 
     //员工修改申请
     public GoOut updateGoOutById(int id, GoOut goOut){
-        return goOutDao.updateGoOutByid(id,goOut);
+        return goOutDao.updateGoOutByid(id, goOut);
     }
 
     //删除申请
@@ -25,7 +34,7 @@ public class GoOutService {
     }
 
     //查询自己的外出记录
-    public List<GoOut> queryGoOutByEmpNo (String empNo){
+    public List<GoOut> queryGoOutByEmpNo (int empNo){
         return goOutDao.querygoOutByEmpNo(empNo);
     }
 
@@ -34,8 +43,8 @@ public class GoOutService {
         return goOutDao.querygoOut();
     }
 
-    //审批申请
-    public GoOut examineById(int id ,GoOut goOut){
-        return goOutDao.updategoOutByPower(id,goOut);
-    }
+//    //审批申请
+//    public GoOut examineById(int id ,GoOut goOut){
+//        return goOutDao.updategoOutByPower(id,goOut);
+//    }
 }

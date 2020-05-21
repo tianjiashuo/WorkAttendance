@@ -12,14 +12,15 @@ public class LeaveRowMapper implements RowMapper<Leave> {
     public Leave mapRow(ResultSet rs, int i) throws SQLException {
         Leave leave = new Leave();
         leave.setId(rs.getInt("id"));
-        leave.setEmpNo(rs.getString("empNo"));
-        leave.setEmpName(rs.getString("empName"));
-        leave.setType(rs.getString("type"));
-        leave.setStartTime(rs.getString("startTime"));
-        leave.setEndTime(rs.getString("endTime"));
+        leave.setEmp_no(rs.getInt("emp_no"));
+        leave.setEmp_no(rs.getInt("type"));
+        leave.setStart_time(rs.getString("start_time"));
+        leave.setEnd_time(rs.getString("end_time"));
         leave.setReason(rs.getString("reason"));
-        leave.setState(rs.getString("state"));
-        leave.setOpinion(rs.getString("opinion"));
+        leave.setState(rs.getBoolean("state"));
+        leave.setDivision_manager_state(rs.getBoolean("division_manager_state"));
+        leave.setVice_manager_state(rs.getBoolean("vice_manager_state"));
+        leave.setManager_state(rs.getBoolean("manager_state"));
         return leave;
     }
 }
