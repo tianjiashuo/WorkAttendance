@@ -2,7 +2,7 @@ package com.workattendance.Repository.entity;
 
 /*考勤表*/
 
-public class Check {
+public class Check{
 
     private int id;
     private String empNo;

@@ -13,7 +13,8 @@ public class LeaveRowMapper implements RowMapper<Leave> {
         Leave leave = new Leave();
         leave.setId(rs.getInt("id"));
         leave.setEmp_no(rs.getInt("emp_no"));
-        leave.setEmp_no(rs.getInt("type"));
+        /***mao***/
+        leave.setType(rs.getInt("type"));
         leave.setStart_time(rs.getString("start_time"));
         leave.setEnd_time(rs.getString("end_time"));
         leave.setReason(rs.getString("reason"));
