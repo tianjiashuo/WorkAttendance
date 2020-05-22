@@ -48,6 +48,22 @@ public class GoOutController {
         goOutService.deleteGoOutById(id);
     }
 
+    //项目经理审批外出申请
+    @PutMapping("/goOutAuditDivision/{id}")
+    public void auditByDivision(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
+        goOutService.auditByDivision(id,goOut,response);
+    }
+    //副经理审批外出申请
+    @PutMapping("/goOutAuditVice/{id}")
+    public void auditByVice(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
+        goOutService.auditByVice(id,goOut,response);
+    }
+    //总经理审批外出申请
+    @PutMapping("/goOutAuditManager/{id}")
+    public void auditByManager(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
+        goOutService.auditByManager(id,goOut,response);
+    }
+
 //    //查询所有人的外出记录
 //    @GetMapping("/goOut/{empNo}")
 //    List<GoOut>  getGoOut(String empNo) {
