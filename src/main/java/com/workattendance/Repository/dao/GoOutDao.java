@@ -6,11 +6,12 @@ import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.mappers.GoOutRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Repository("goOutDao")
 public class GoOutDao {
 
     @Autowired

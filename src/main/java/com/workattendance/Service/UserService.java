@@ -2,6 +2,10 @@ package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.User;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class UserService {
 
@@ -23,5 +27,9 @@ public class UserService {
         User user = userDao.queryUserByEmpNo(empNo);
         return user.getPower();
     }
+
+//    public HashMap<String,List> getAllstate(){
+//
+//    }
 
 }
