@@ -2,10 +2,11 @@ package com.workattendance.Repository.entity;
 
 /*外出记录*/
 
-public class GoOut extends Absence{
+public class GoOut {
 
     private int id;
     private int emp_no;
+    private String emp_name;
     private String start_time;
     private String end_time;
     private String reason;
@@ -65,9 +66,7 @@ public class GoOut extends Absence{
 
     public boolean getDivision_manager_state(){return division_manager_state;}
 
-    public void setDivision_manager_state(boolean division_manager_state){
-        this.division_manager_state = division_manager_state;
-    }
+    public void setDivision_manager_state(boolean division_manager_state){ this.division_manager_state = division_manager_state; }
 
     public boolean getVice_manager_state(){return vice_manager_state;}
 
@@ -79,6 +78,12 @@ public class GoOut extends Absence{
 
     public void setManager_state(boolean manager_state){
         this.manager_state = manager_state;
+    }
+    public String getEmp_name() {
+        return emp_name;
+    }
+    public void setEmp_name(String emp_name) {
+        this.emp_name = emp_name;
     }
 
 

@@ -13,6 +13,8 @@ public class GoOutRowMapper implements RowMapper<GoOut> {
         GoOut goOut = new GoOut();
         goOut.setId(rs.getInt("id"));
         goOut.setEmp_no(rs.getInt("emp_no"));
+        /*** mao***/
+        goOut.setEmp_name(rs.getString("emp_name"));
         goOut.setStart_time(rs.getString("start_time"));
         goOut.setEnd_time(rs.getString("end_time"));
         goOut.setReason(rs.getString("reason"));

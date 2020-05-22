@@ -2,10 +2,11 @@ package com.workattendance.Repository.entity;
 
 /*请假记录*/
 
-public class Leave extends Absence{
+public class Leave {
 
     private int id;
     private int emp_no;
+    private String emp_name;
     private int type;
     private String start_time;
     private String end_time;
@@ -86,5 +87,12 @@ public class Leave extends Absence{
 
     public void setManager_state(boolean manager_state){
         this.manager_state = manager_state;
+    }
+    public String getEmp_name() {
+        return emp_name;
+    }
+
+    public void setEmp_name(String emp_name) {
+        this.emp_name = emp_name;
     }
 }
