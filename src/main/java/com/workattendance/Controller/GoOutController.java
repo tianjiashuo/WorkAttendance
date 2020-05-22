@@ -30,6 +30,12 @@ public class GoOutController {
         return goOutService.queryGoOutByEmpNo(empNo);
     }
 
+    //根据id查询外出记录详情ok
+    @GetMapping("/goOutDetail/{id}")
+    GoOut getGoOutById(@PathVariable int id) {
+        return goOutService.queryGoOutById(id);
+    }
+
     //修改申请ok
     @PutMapping("/goOut/{id}")
     public GoOut updateGoOutById(@PathVariable int id, @RequestBody GoOut goOut){

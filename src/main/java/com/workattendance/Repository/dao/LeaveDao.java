@@ -21,9 +21,9 @@ public class LeaveDao {
     //添加记录
     public Leave insert(Leave leave) {
         Leave leave1 = new Leave();
-        String sql2 = "INSERT INTO leave_request (emp_no,type,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql2, leave.getEmp_no(),leave.getType(),leave.getStart_time(),leave.getEnd_time(),leave.getReason(),leave.getState(),leave.getDivision_manager_state(),leave.getVice_manager_state(),leave.getManager_state());
-        String sql3 = "SELECT * FROM askforleave WHERE emp_no=? AND start_time=?";
+        String sql2 = "INSERT INTO leave_request (emp_no,emp_name,type,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state) VALUES(?, ?, ? ,?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql2, leave.getEmp_no(),leave.getEmp_name(),leave.getType(),leave.getStart_time(),leave.getEnd_time(),leave.getReason(),leave.getState(),leave.getDivision_manager_state(),leave.getVice_manager_state(),leave.getManager_state());
+        String sql3 = "SELECT * FROM leave_request WHERE emp_no=? AND start_time=?";
         leave1= jdbcTemplate.queryForObject(sql3, new LeaveRowMapper(), leave.getEmp_no(),leave.getStart_time());
         return leave1;
     }

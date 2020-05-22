@@ -20,8 +20,8 @@ public class GoOutDao {
     //添加记录
     public GoOut insert(GoOut goOut) {
         GoOut goOut1 = new GoOut();
-        String sql = "INSERT INTO goout (emp_no,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, goOut.getEmp_no(),goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),goOut.getState(),goOut.getDivision_manager_state(),goOut.getVice_manager_state(),goOut.getManager_state());
+        String sql = "INSERT INTO goout (emp_no,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state,emp_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, goOut.getEmp_no(),goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),goOut.getState(),goOut.getDivision_manager_state(),goOut.getVice_manager_state(),goOut.getManager_state(),goOut.getEmp_name());
         String sql2 = "SELECT * FROM goOut WHERE emp_no=? AND start_time=?";
         goOut1= jdbcTemplate.queryForObject(sql2, new GoOutRowMapper(),goOut.getEmp_no(),goOut.getStart_time());
         return goOut1;
@@ -31,7 +31,7 @@ public class GoOutDao {
     public GoOut updateGoOutByid(int id, GoOut goOut){
         String sql = "UPDATE goout set start_time=? ,end_time=? ,reason=?  WHERE id=?";
         jdbcTemplate.update(sql, goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),id);
-        return querygoOutById(goOut.getId());
+        return querygoOutById(id);
     }
 
     //根据id删除记录

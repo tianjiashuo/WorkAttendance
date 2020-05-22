@@ -33,6 +33,11 @@ public class LeaveService {
         return leaveDao.queryLeaveByEmpNo(emp_no);
     }
 
+    //查询一条请假记录详情
+    public Leave queryLeaveById (int id){
+        return leaveDao.queryLeaveById(id);
+    }
+
     //查询所有人的请假记录
     public List<Leave> queryLeave(){
         return leaveDao.queryLeave();
