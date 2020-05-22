@@ -63,8 +63,8 @@ public class LeaveDao {
     }
 
     //返回所有员工记录
-    public List<Leave> queryLeave() {
-        String sql = "SELECT * FROM leave_request ORDER BY id";
+    public List<Leave> queryAllLeave(String date) {
+        String sql = "SELECT * FROM leave_request WHERE start_date < ? AND state = 1 ORDER BY id";
         List<Leave> LeaveList= jdbcTemplate.query(sql, new LeaveRowMapper());
         return LeaveList;
     }
