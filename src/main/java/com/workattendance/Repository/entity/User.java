@@ -29,7 +29,6 @@ public class User {
         return usersName;
     }
 
-
     public int getId() {
         return id;
     }
@@ -47,15 +46,12 @@ public class User {
     public String getStete() {
         return stete;
     }
-
     public void setStete(String stete) {
         this.stete = stete;
     }
-
     public String getYears() {
         return years;
     }
-
     public void setYears(String years) {
         this.years = years;
     }
