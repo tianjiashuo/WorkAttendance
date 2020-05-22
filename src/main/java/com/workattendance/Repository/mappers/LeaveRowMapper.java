@@ -14,6 +14,8 @@ public class LeaveRowMapper implements RowMapper<Leave> {
         leave.setId(rs.getInt("id"));
         leave.setEmp_no(rs.getInt("emp_no"));
         /***mao***/
+        leave.setEmp_name(rs.getString("emp_name"));
+        /***mao***/
         leave.setType(rs.getInt("type"));
         leave.setStart_time(rs.getString("start_time"));
         leave.setEnd_time(rs.getString("end_time"));

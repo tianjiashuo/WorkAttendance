@@ -26,13 +26,19 @@ public class LeaveController {
         return leaveService.inserLeave(leave);
     }
 
-    //查询自己的请假记录ok
+    //查询自己所有的请假记录ok
     @GetMapping("/leave/{empNo}")
     List<Leave> getLeaveByEmpNo(@PathVariable int empNo) {
         return leaveService.queryLeaveByEmpNo(empNo);
     }
 
-    //修改申请ok
+    //根据id查询请假记录详情ok
+    @GetMapping("/leaveDetail/{id}")
+    Leave getLeaveById(@PathVariable int id) {
+        return leaveService.queryLeaveById(id);
+    }
+
+    //修改申请okid
     @PutMapping("/leave/{id}")
     public Leave updateLeaveById(@PathVariable int id,@RequestBody Leave leave){
         return leaveService.updateLeaveById(id,leave);
@@ -44,18 +50,19 @@ public class LeaveController {
         leaveService.deleteLeaveById(id);
     }
 
-//    //查询所有人的请假记录
-//    @GetMapping("/leave/{empNo}")
-//    List<Leave>  getLeave(String empNo) {
-//        String userPower = userService.getUserPower(empNo);
-//        Power power = powerService.getPower(userPower);
-//        //有权限才可以查看
-//        if(power.getViewLeave()){
-//            return leaveService.queryLeave();
-//        }else{
-//            return null;
-//        }
-//    }
+    //查询所有人的请假记录
+    @GetMapping("/leave/{empNo}")
+    List<Leave>  getLeave(String empNo) {
+
+        String userPower = userService.getUserPower(empNo);
+        Power power = powerService.getPower(userPower);
+        //有权限才可以查看
+        if(power.getViewLeave()){
+            return leaveService.queryLeave();
+        }else{
+            return null;
+        }
+    }
 
 //    //审批申请
 //    @PutMapping("/leave/{loginNo,empNo,id,leave}")
