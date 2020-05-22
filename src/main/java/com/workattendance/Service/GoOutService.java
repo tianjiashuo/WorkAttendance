@@ -13,11 +13,6 @@ public class GoOutService {
     @Autowired
     private GoOutDao goOutDao;
 
-    //ceshi
-    public String test(){
-        return "test";
-    }
-
     //外出申请
     public GoOut inserGoOut(GoOut goOut){
         return goOutDao.insert(goOut);
@@ -36,6 +31,11 @@ public class GoOutService {
     //查询自己的外出记录
     public List<GoOut> queryGoOutByEmpNo (int empNo){
         return goOutDao.querygoOutByEmpNo(empNo);
+    }
+
+    //查询一条外出记录详情
+    public GoOut queryGoOutById (int id){
+        return goOutDao.querygoOutById(id);
     }
 
     //查询所有人的外出记录
