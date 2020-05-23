@@ -78,6 +78,18 @@ public class LeaveDao {
         return jdbcTemplate.queryForObject(sql, new Object[]{leaveId}, Boolean.class);
     }
 
+    //查找剩余假期数
+    public int queryLeaveBalance(int empNo,int leaveId){
+        String sql = "SELECT `balances` FROM leave_balances WHERE emp_no=? AND leave_id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{empNo,leaveId}, Integer.class);
+    }
+
+    //审核通过后修改假期余额
+    public void updateLeaveBalance(int empNo,int leaveId,Long balances){
+        String sql = "UPDATE leave_balances set balances=? WHERE emp_no=? AND leave_id = ?";
+        jdbcTemplate.update(sql,balances,empNo,leaveId);
+    }
+
     //审核更新leave_request表
     //部门经理审核外出通过
     public void updateLeaveDivisionPass(int id){
@@ -105,6 +117,9 @@ public class LeaveDao {
         String sql = "UPDATE leave_request set state=2 WHERE id=?";
         jdbcTemplate.update(sql,id);
     }
+
+
+
 
 
 }
