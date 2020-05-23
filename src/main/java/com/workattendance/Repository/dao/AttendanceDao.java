@@ -16,16 +16,6 @@ public class AttendanceDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-//    //添加出勤记录
-//    public Attendance insert(Attendance attendance) {
-//        Attendance attendance1 = new Attendance();
-//        String sql = "INSERT INTO attendance (id,empNo,date,startTime,endTime) VALUES(?, ?, ?, ?, ?)";
-//        jdbcTemplate.update(sql, null, attendance.getEmpNo(), attendance.getDate(), attendance.getStartTime(), attendance.getEndTime());
-//        String sql2 = "SELECT * FROM attendance WHERE empNo=? ";
-//        attendance1= jdbcTemplate.queryForObject(sql2, new AttendanceRowMapper(), attendance.getEmpNo());
-//
-//        return attendance1;
-//    }
 
     //得到单次记录
     public Attendance queryAttendanceById(int id) {

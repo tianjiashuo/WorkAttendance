@@ -83,7 +83,7 @@ public class UserService {
         //获得当天00:00时间戳
         long nowTime =System.currentTimeMillis();
         long endTime = nowTime - ((nowTime + TimeZone.getDefault().getRawOffset()) % (24 * 60 * 60 * 1000L));
-        long startTime = endTime - 86400;
+        long startTime = endTime - 24*60*60*1000;
         List<Leave> leaveList = leaveDao.queryAllLeave(convertTimeToString(startTime),convertTimeToString(endTime));
         for (int i = 0; i < leaveList.size(); i++) {
             if(convertTimeToLong(leaveList.get(i).getEnd_time()) <= endTime){

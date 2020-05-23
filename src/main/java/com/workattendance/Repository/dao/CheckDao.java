@@ -33,11 +33,14 @@ public class CheckDao {
         jdbcTemplate.update(sql, absenteeism,empNo);
         return queryCheckByEmpNo(empNo);
     }
+    //更新迟到次数
 
-    //根据empNo查询
-    public Check queryCheckByEmpNo(String empNo) {
-        String sql = "SELECT * FROM checktable WHERE empNo=?";
-        Check check = jdbcTemplate.queryForObject(sql, new CheckRowMapper(), empNo);
+    //更新早退次数
+
+    //根据empNo和date查询
+    public Check queryCheckByEmpNo(String empNon ,String date) {
+        String sql = "SELECT * FROM checktable WHERE empNo=? AND date = ?";
+        Check check = jdbcTemplate.queryForObject(sql, new CheckRowMapper(), empNon);
         return check;
     }
 
