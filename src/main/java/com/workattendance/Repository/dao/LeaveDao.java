@@ -71,6 +71,13 @@ public class LeaveDao {
         List<Leave> LeaveList= jdbcTemplate.query(sql, new LeaveRowMapper(),fromDate,fromDate,fromDate,endDate);
         return LeaveList;
     }
+
+    //获得假期是否带薪
+    public boolean queryLeaveSalary(int leaveId) {
+        String sql = "SELECT `is_salary` FROM leave_types WHERE id=?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{leaveId}, Boolean.class);
+    }
+
     //审核更新leave_request表
     //部门经理审核外出通过
     public void updateLeaveDivisionPass(int id){
@@ -98,5 +105,6 @@ public class LeaveDao {
         String sql = "UPDATE leave_request set state=2 WHERE id=?";
         jdbcTemplate.update(sql,id);
     }
+
 
 }

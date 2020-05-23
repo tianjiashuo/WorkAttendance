@@ -1,7 +1,9 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.GoOutDao;
+import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.GoOut;
+import com.workattendance.Repository.entity.Leave;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +15,8 @@ public class GoOutService {
 
     @Autowired
     private GoOutDao goOutDao;
+    @Autowired
+    private UserDao userDao;
 
     //外出申请
     public GoOut inserGoOut(GoOut goOut){
@@ -73,9 +77,11 @@ public class GoOutService {
 
     //总经理审批外出申请
     public void auditByManager(int id ,GoOut response){
+        GoOut goOut = goOutDao.querygoOutById(id);
         if(response.getState()){
             goOutDao.updategoOutManagerPass(id);
             goOutDao.updategoOutPass(id);
+            userDao.updateUserStateByEmpNo(goOut.getEmp_no(),"外出");
         }
         else{
             goOutDao.updategoOutRefuse(id);

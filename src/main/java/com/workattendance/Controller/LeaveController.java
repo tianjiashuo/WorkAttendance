@@ -63,6 +63,7 @@ public class LeaveController {
     List<Leave>  getLeave(@PathVariable String fromDate, @PathVariable  String endDate) {
         return leaveService.queryAllLeave(fromDate, endDate);
    }
+
     //项目经理审批外出申请
     @PutMapping("/leaveAuditDivision/{id}")
     public void auditByDivision(@PathVariable int id,@RequestBody Leave response){

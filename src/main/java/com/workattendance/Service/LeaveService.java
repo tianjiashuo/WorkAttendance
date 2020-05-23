@@ -1,7 +1,7 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.LeaveDao;
-import com.workattendance.Repository.entity.GoOut;
+import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,8 @@ public class LeaveService {
 
     @Autowired
     private LeaveDao leaveDao;
+    @Autowired
+    private UserDao userDao;
 
     //请假申请
     public Leave inserLeave(Leave leave){
@@ -65,10 +67,17 @@ public class LeaveService {
     //副经理审批外出申请
     public void auditByVice(int id ,Leave response){
         Leave leave = leaveDao.queryLeaveById(id);
+        Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
         if(response.getState()){
             if(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time())>daytoSecond(3)){
                 leaveDao.updateLeaveVicePass(id);
                 leaveDao.updateLeavePass(id);
+                if(isSalary){
+                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+                }
+                else{
+                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+                }
             }
             else{
                 leaveDao.updateLeaveVicePass(id);
@@ -81,9 +90,17 @@ public class LeaveService {
 
     //总经理审批外出申请
     public void auditByManager(int id ,Leave response){
+        Leave leave = leaveDao.queryLeaveById(id);
+        Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
         if(response.getState()){
             leaveDao.updateLeaveManagerPass(id);
             leaveDao.updateLeavePass(id);
+            if(isSalary){
+                userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+            }
+            else{
+                userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+            }
         }
         else{
             leaveDao.updateLeaveRefuse(id);

@@ -53,6 +53,6 @@ public class CheckService {
     public List<Check> getALLCheckByDate(String from,String end){
         return checkDao.queryAllCheckByDay(from,end);
     }
-
+//0/59 0 0 1/1 * ?
 
 }

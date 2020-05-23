@@ -75,5 +75,15 @@ public class UserDao {
         return inCompanyUser;
     }
 
+    /***
+     * 更新员工状态
+     * @author shuo
+     * @return
+     */
+    public void updateUserStateByEmpNo(int empNo,String state){
+        String sql = "UPDATE user set state=? WHERE emp_no=?";
+        jdbcTemplate.update(sql,state,empNo);
+    }
+
 
 }
