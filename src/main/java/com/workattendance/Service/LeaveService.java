@@ -39,9 +39,9 @@ public class LeaveService {
     }
 
     //查询所有人的请假记录
-    public List<Leave> queryLeave(){
-        return leaveDao.queryLeave();
-    }
+//    public List<Leave> queryLeave(){
+//        return leaveDao.queryLeave();
+//    }
 
 //    //审批申请
 //    public Leave examineById(int id ,Leave leave){

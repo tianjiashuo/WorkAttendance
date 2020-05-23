@@ -2,6 +2,9 @@ package com.workattendance.Repository.entity;
 
 /*外出记录*/
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GoOut {
 
     private int id;
@@ -11,8 +14,11 @@ public class GoOut {
     private String end_time;
     private String reason;
     private boolean state;
+    @JsonAlias("divisionManagerState")
     private boolean division_manager_state;
+    @JsonAlias("viceManagerState")
     private boolean vice_manager_state;
+    @JsonAlias("managerState")
     private boolean manager_state;
 
 

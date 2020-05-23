@@ -40,7 +40,6 @@ public class GoOutDao {
         jdbcTemplate.update(sql, id);
     }
 
-
     //根据id查询
     public GoOut querygoOutById(int id) {
         String sql = "SELECT * FROM goout WHERE id=?";
@@ -64,34 +63,30 @@ public class GoOutDao {
 
     //审核更新goout表
     //部门经理审核外出通过
-    public GoOut updategoOutDivisionPass(int id,GoOut goOut){
+    public void updategoOutDivisionPass(int id){
         String sql = "UPDATE goOut set division_manager_state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
-        return querygoOutById(id);
     }
 
     //副经理审核外出通过
-    public GoOut updategoOutVicePass(int id,GoOut goOut){
+    public void updategoOutVicePass(int id){
         String sql = "UPDATE goOut set vice_manager_state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
-        return querygoOutById(id);
     }
     //总经理审核外出通过
-    public GoOut updategoOutManagerPass(int id,GoOut goOut){
+    public void updategoOutManagerPass(int id){
         String sql = "UPDATE goOut set manager_state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
-        return querygoOutById(id);
     }
     //请假条审核通过
-    public GoOut updategoOutPass(int id,GoOut goOut){
+    public GoOut updategoOutPass(int id){
         String sql = "UPDATE goOut set state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
         return querygoOutById(id);
     }
     //审核外出拒绝
-    public GoOut updategoOutRefuse(int id,GoOut goOut){
+    public void updategoOutRefuse(int id){
         String sql = "UPDATE goOut set state=2 WHERE id=?";
         jdbcTemplate.update(sql,id);
-        return querygoOutById(id);
     }
 }

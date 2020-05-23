@@ -39,16 +39,16 @@ public class AttendanceController {
     }
 
     //查询所有人的出勤记录
-    @GetMapping("/attendance/{empNo}")
-    List<Attendance>  getAttendance(String empNo) {
-        String userPower = userService.getUserPower(empNo);
-        Power power = powerService.getPower(userPower);
-        //有权限才可以查看
-        if(power.getViewAttendance()){
-            return attendanceService.queryAttendance();
-        }else{
-            return null;
-        }
-    }
+//    @GetMapping("/attendance/{empNo}")
+//    List<Attendance>  getAttendance(String empNo) {
+//        String userPower = userService.getUserPower(empNo);
+//        Power power = powerService.getPower(userPower);
+//        //有权限才可以查看
+//        if(power.getViewAttendance()){
+//            return attendanceService.queryAttendance();
+//        }else{
+//            return null;
+//        }
+//    }
 
 }

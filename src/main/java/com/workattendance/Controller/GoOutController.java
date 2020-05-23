@@ -1,5 +1,6 @@
 package com.workattendance.Controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Power;
 import com.workattendance.Service.GoOutService;
@@ -17,6 +18,7 @@ public class GoOutController {
     private GoOutService goOutService;
     private PowerService powerService;
     private UserService userService;
+
 
     //外出申请ok
     @PostMapping("/goOut")
@@ -50,18 +52,20 @@ public class GoOutController {
 
     //项目经理审批外出申请
     @PutMapping("/goOutAuditDivision/{id}")
-    public void auditByDivision(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
-        goOutService.auditByDivision(id,goOut,response);
+    public void auditByDivision(@PathVariable int id,@RequestBody GoOut response){
+        goOutService.auditByDivision(id,response);
     }
+
     //副经理审批外出申请
     @PutMapping("/goOutAuditVice/{id}")
-    public void auditByVice(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
-        goOutService.auditByVice(id,goOut,response);
+    public void auditByVice(@PathVariable int id,@RequestBody GoOut response){
+        goOutService.auditByVice(id,response);
     }
+
     //总经理审批外出申请
     @PutMapping("/goOutAuditManager/{id}")
-    public void auditByManager(@PathVariable int id,@RequestBody GoOut goOut,@RequestBody boolean response){
-        goOutService.auditByManager(id,goOut,response);
+    public void auditByManager(@PathVariable int id,@RequestBody GoOut response){
+        goOutService.auditByManager(id,response);
     }
 
 //    //查询所有人的外出记录

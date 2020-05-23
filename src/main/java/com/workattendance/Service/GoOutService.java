@@ -4,9 +4,6 @@ import com.workattendance.Repository.dao.GoOutDao;
 import com.workattendance.Repository.entity.GoOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.time.*;
@@ -48,39 +45,42 @@ public class GoOutService {
     }
     /*** shuo***/
     //项目经理审批外出申请
-    public GoOut auditByDivision(int id ,GoOut goOut,boolean response){
-        if(response == true){
-            return goOutDao.updategoOutDivisionPass(id,goOut);
+    public void auditByDivision(int id ,GoOut response){
+        GoOut goOut = goOutDao.querygoOutById(id);
+        if(response.getState()){
+            goOutDao.updategoOutDivisionPass(id);
         }
         else{
-            return goOutDao.updategoOutRefuse(id,goOut);
+            goOutDao.updategoOutRefuse(id);
         }
     }
 
     //副经理审批外出申请
-    public GoOut auditByVice(int id ,GoOut goOut,boolean response){
-        if(response == true){
+    public void auditByVice(int id ,GoOut response){
+        GoOut goOut = goOutDao.querygoOutById(id);
+        if(response.getState()){
                 if(convertTimeToLong(goOut.getEnd_time())-convertTimeToLong(goOut.getStart_time())>daytoSecond(3)){
-                    goOutDao.updategoOutVicePass(id,goOut);
-                    return goOutDao.updategoOutPass(id,goOut);
+                    goOutDao.updategoOutVicePass(id);
+                    goOutDao.updategoOutPass(id);
                 }
                 else{
-                    return goOutDao.updategoOutVicePass(id,goOut);
+                    goOutDao.updategoOutVicePass(id);
                 }
         }
         else{
-            return goOutDao.updategoOutRefuse(id,goOut);
+            goOutDao.updategoOutRefuse(id);
         }
     }
 
     //总经理审批外出申请
-    public GoOut auditByManager(int id ,GoOut goOut,boolean response){
-        if(response == true){
-            goOutDao.updategoOutManagerPass(id,goOut);
-            return goOutDao.updategoOutPass(id,goOut);
+    public void auditByManager(int id ,GoOut response){
+        GoOut goOut = goOutDao.querygoOutById(id);
+        if(response.getState()){
+            goOutDao.updategoOutManagerPass(id);
+            goOutDao.updategoOutPass(id);
         }
         else{
-            return goOutDao.updategoOutRefuse(id,goOut);
+            goOutDao.updategoOutRefuse(id);
         }
     }
 

@@ -51,18 +51,18 @@ public class LeaveController {
     }
 
     //查询所有人的请假记录
-    @GetMapping("/leave/{empNo}")
-    List<Leave>  getLeave(String empNo) {
-
-        String userPower = userService.getUserPower(empNo);
-        Power power = powerService.getPower(userPower);
-        //有权限才可以查看
-        if(power.getViewLeave()){
-            return leaveService.queryLeave();
-        }else{
-            return null;
-        }
-    }
+//    @GetMapping("/leave/{empNo}")
+//    List<Leave>  getLeave(String empNo) {
+//
+//        String userPower = userService.getUserPower(empNo);
+//        Power power = powerService.getPower(userPower);
+//        //有权限才可以查看
+//        if(power.getViewLeave()){
+//            return leaveService.queryLeave();
+//        }else{
+//            return null;
+//        }
+//    }
 
 //    //审批申请
 //    @PutMapping("/leave/{loginNo,empNo,id,leave}")
