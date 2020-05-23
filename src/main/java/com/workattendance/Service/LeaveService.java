@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("leaveService")
 public class LeaveService {
 
     @Autowired
@@ -38,10 +38,20 @@ public class LeaveService {
         return leaveDao.queryLeaveById(id);
     }
 
+<<<<<<< HEAD
     //查询所有人的请假记录
 //    public List<Leave> queryLeave(){
 //        return leaveDao.queryLeave();
 //    }
+=======
+    /***
+     * 查询所有人的请假信息
+     * @return
+     */
+    public List<Leave> queryAllLeave(String fromDate,String endDate){
+        return leaveDao.queryAllLeave(fromDate,endDate);
+    }
+>>>>>>> 733a38c8842476bdff455cd46aa2f961751a9d14
 
 //    //审批申请
 //    public Leave examineById(int id ,Leave leave){

@@ -10,45 +10,55 @@ Target Server Type    : MYSQL
 Target Server Version : 80019
 File Encoding         : 65001
 
-Date: 2020-05-22 17:46:36
+Date: 2020-05-23 00:04:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `attendence`
+-- Table structure for `attendance`
 -- ----------------------------
-DROP TABLE IF EXISTS `attendence`;
-CREATE TABLE `attendence` (
+DROP TABLE IF EXISTS `attendance`;
+CREATE TABLE `attendance` (
   `id` int NOT NULL AUTO_INCREMENT,
   `emp_no` int NOT NULL,
-  `date` datetime NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
+  `emp_name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
--- Records of attendence
+-- Records of attendance
 -- ----------------------------
+INSERT INTO `attendance` VALUES ('1', '1', 'maowenrui', '2020-05-10 09:09:09');
+INSERT INTO `attendance` VALUES ('2', '2', 'tianjiashuo', '2020-05-10 09:10:09');
+INSERT INTO `attendance` VALUES ('3', '1', 'maowenrui', '2020-05-10 19:09:09');
+INSERT INTO `attendance` VALUES ('4', '2', 'tianjiashuo', '2020-05-10 19:10:09');
+INSERT INTO `attendance` VALUES ('5', '3', 'baijiax', '2020-05-20 09:09:09');
+INSERT INTO `attendance` VALUES ('6', '4', 'liqinying', '2020-05-20 09:10:09');
+INSERT INTO `attendance` VALUES ('7', '3', 'baijiax', '2020-05-20 19:09:09');
+INSERT INTO `attendance` VALUES ('8', '4', 'liqinying', '2020-05-20 19:10:09');
 
 -- ----------------------------
--- Table structure for `check`
+-- Table structure for `checktable`
 -- ----------------------------
-DROP TABLE IF EXISTS `check`;
-CREATE TABLE `check` (
+DROP TABLE IF EXISTS `checktable`;
+CREATE TABLE `checktable` (
   `id` int NOT NULL AUTO_INCREMENT,
   `emp_no` int NOT NULL,
+  `emp_name` varchar(255) COLLATE utf8_bin NOT NULL,
   `days` int NOT NULL,
   `absenteeism` int NOT NULL,
   `late_days` int NOT NULL,
   `leave_early_days` int NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
--- Records of check
+-- Records of checktable
 -- ----------------------------
+INSERT INTO `checktable` VALUES ('1', '2', 'tianjiashuo', '3', '4', '5', '6', '2020-05-10 09:09:09');
 
 -- ----------------------------
 -- Table structure for `goout`
@@ -107,13 +117,15 @@ CREATE TABLE `leave_request` (
   `vice_manager_state` tinyint(1) NOT NULL,
   `manager_state` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of leave_request
 -- ----------------------------
 INSERT INTO `leave_request` VALUES ('1', '4', 'liqinying', '4', '2020-05-21 22:30:08', '2020-05-23 22:30:11', '想修年假', '1', '0', '0', '0');
 INSERT INTO `leave_request` VALUES ('2', '1', 'maowenrui', '5', '2020-05-22 17:04:10', '2020-05-25 17:04:10', '有事', '1', '0', '0', '0');
+INSERT INTO `leave_request` VALUES ('3', '2', 'tianjiashuo', '4', '2020-04-21 22:30:08', '2020-05-26 22:30:11', '想修年假', '1', '0', '0', '0');
+INSERT INTO `leave_request` VALUES ('4', '4', 'liqinying', '5', '2020-05-21 22:30:08', '2020-05-21 22:30:11', '修事假', '1', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `leave_types`
@@ -164,7 +176,7 @@ CREATE TABLE `power` (
   `id` int NOT NULL AUTO_INCREMENT,
   `positionId` int NOT NULL,
   `view_own_attendance` tinyint(1) NOT NULL,
-  `view_all_attendence` tinyint(1) NOT NULL,
+  `view_all_attendance` tinyint(1) NOT NULL,
   `view_check` tinyint(1) NOT NULL,
   `view_all_leave` tinyint(1) NOT NULL,
   `view_pass_leave` tinyint(1) NOT NULL,

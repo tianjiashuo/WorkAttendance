@@ -1,51 +1,43 @@
 package com.workattendance.Repository.entity;
 
+import org.springframework.stereotype.Repository;
+
 /*出勤记录*/
 
 public class Attendance {
 
     private int id;
-    private String empNo;
-    private String date;
-    private String startTime;
-    private String endTime;
-    private String state;
-
+    private String emp_no;
+    private String time;
+    private String emp_name;
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public String getEmpNo(){ return empNo; }
-    public void  setEmpNo(String empNo){ this.empNo = empNo; }
-    public String getDate(){ return date; }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getEmp_no() {
+        return emp_no;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public void setEmp_no(String emp_no) {
+        this.emp_no = emp_no;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public String getTime() {
+        return time;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setTime(String time) {
+        this.time = time;
+    }
+    public String getEmp_name() {
+        return emp_name;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setEmp_name(String emp_name) {
+        this.emp_name = emp_name;
     }
 }

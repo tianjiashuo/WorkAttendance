@@ -8,11 +8,12 @@ import com.workattendance.Repository.mappers.GoOutRowMapper;
 import com.workattendance.Repository.mappers.LeaveRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Repository("leaveDao")
 public class LeaveDao {
 
     @Autowired
@@ -41,13 +42,6 @@ public class LeaveDao {
         jdbcTemplate.update(sql, id);
     }
 
-//    //经理审核
-//    public Leave updateLeaveByPower(int id,Leave leave){
-//        String sql = "UPDATE leave set state=?,opinion=?  WHERE id=?";
-//        jdbcTemplate.update(sql, leave.getState(),leave.getOpinion(),id);
-//        return queryLeaveById(id);
-//    }
-
     //根据id查询
     public Leave queryLeaveById(int id) {
         String sql = "SELECT * FROM leave_request WHERE id=?";
@@ -62,11 +56,21 @@ public class LeaveDao {
         return leaveList;
     }
 
-    //返回所有员工记录
-    public List<Leave> queryAllLeave(String date) {
-        String sql = "SELECT * FROM leave_request WHERE start_date < ? AND state = 1 ORDER BY id";
-        List<Leave> LeaveList= jdbcTemplate.query(sql, new LeaveRowMapper());
+
+    /***
+     * 查询所有员工的请假情况
+     * @param fromDate
+     * @param endDate
+     * @return
+     */
+    public List<Leave> queryAllLeave(String fromDate,String endDate) {
+        String sql = "SELECT * FROM leave_request WHERE start_time< ? AND end_time >= ? AND state = 1 " +
+                "UNION SELECT * FROM  leave_request WHERE  start_time > ? AND start_time <= ? AND state =1  " +
+                "ORDER BY id asc";
+
+        List<Leave> LeaveList= jdbcTemplate.query(sql, new LeaveRowMapper(),fromDate,fromDate,fromDate,endDate);
         return LeaveList;
     }
+
 
 }

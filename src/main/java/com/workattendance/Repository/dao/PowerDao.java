@@ -6,7 +6,9 @@ import com.workattendance.Repository.entity.Power;
 import com.workattendance.Repository.mappers.PowerRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository("powerDao")
 public class PowerDao {
 
     @Autowired

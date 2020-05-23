@@ -12,11 +12,9 @@ public class AttendanceRowMapper implements RowMapper<Attendance> {
     public Attendance mapRow(ResultSet rs, int i) throws SQLException {
         Attendance attendance = new Attendance();
         attendance.setId(rs.getInt("id"));
-        attendance.setEmpNo(rs.getString("empNo"));
-        attendance.setDate(rs.getString("date"));
-        attendance.setStartTime(rs.getString("startTime"));
-        attendance.setEndTime(rs.getString("endTime"));
-        attendance.setState(rs.getString("state"));
+        attendance.setEmp_no(rs.getString("emp_no"));
+        attendance.setEmp_name(rs.getString("emp_name"));
+        attendance.setTime(rs.getString("time"));
         return attendance;
     }
 }
