@@ -46,7 +46,6 @@ public class GoOutService {
     /*** shuo***/
     //项目经理审批外出申请
     public void auditByDivision(int id ,GoOut response){
-        GoOut goOut = goOutDao.querygoOutById(id);
         if(response.getState()){
             goOutDao.updategoOutDivisionPass(id);
         }
@@ -74,7 +73,6 @@ public class GoOutService {
 
     //总经理审批外出申请
     public void auditByManager(int id ,GoOut response){
-        GoOut goOut = goOutDao.querygoOutById(id);
         if(response.getState()){
             goOutDao.updategoOutManagerPass(id);
             goOutDao.updategoOutPass(id);

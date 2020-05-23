@@ -78,11 +78,11 @@ public class GoOutDao {
         String sql = "UPDATE goOut set manager_state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
     }
-    //请假条审核通过
-    public GoOut updategoOutPass(int id){
+    //外出审核通过
+    public void updategoOutPass(int id){
         String sql = "UPDATE goOut set state=1 WHERE id=?";
         jdbcTemplate.update(sql,id);
-        return querygoOutById(id);
+//        return querygoOutById(id);
     }
     //审核外出拒绝
     public void updategoOutRefuse(int id){

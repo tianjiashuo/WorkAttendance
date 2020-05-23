@@ -71,6 +71,32 @@ public class LeaveDao {
         List<Leave> LeaveList= jdbcTemplate.query(sql, new LeaveRowMapper(),fromDate,fromDate,fromDate,endDate);
         return LeaveList;
     }
+    //审核更新leave_request表
+    //部门经理审核外出通过
+    public void updateLeaveDivisionPass(int id){
+        String sql = "UPDATE leave_request set division_manager_state=1 WHERE id=?";
+        jdbcTemplate.update(sql,id);
+    }
 
+    //副经理审核外出通过
+    public void updateLeaveVicePass(int id){
+        String sql = "UPDATE leave_request set vice_manager_state=1 WHERE id=?";
+        jdbcTemplate.update(sql,id);
+    }
+    //总经理审核外出通过
+    public void updateLeaveManagerPass(int id){
+        String sql = "UPDATE leave_request set manager_state=1 WHERE id=?";
+        jdbcTemplate.update(sql,id);
+    }
+    //请假条审核通过
+    public void updateLeavePass(int id){
+        String sql = "UPDATE leave_request set state=1 WHERE id=?";
+        jdbcTemplate.update(sql,id);
+    }
+    //审核外出拒绝
+    public void updateLeaveRefuse(int id){
+        String sql = "UPDATE leave_request set state=2 WHERE id=?";
+        jdbcTemplate.update(sql,id);
+    }
 
 }

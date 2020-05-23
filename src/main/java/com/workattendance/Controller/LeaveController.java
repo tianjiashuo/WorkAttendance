@@ -1,5 +1,6 @@
 package com.workattendance.Controller;
 
+import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
 import com.workattendance.Repository.entity.Power;
 import com.workattendance.Service.CheckService;
@@ -62,24 +63,21 @@ public class LeaveController {
     List<Leave>  getLeave(@PathVariable String fromDate, @PathVariable  String endDate) {
         return leaveService.queryAllLeave(fromDate, endDate);
    }
+    //项目经理审批外出申请
+    @PutMapping("/leaveAuditDivision/{id}")
+    public void auditByDivision(@PathVariable int id,@RequestBody Leave response){
+        leaveService.auditByDivision(id,response);
+    }
 
+    //副经理审批外出申请
+    @PutMapping("/leaveAuditVice/{id}")
+    public void auditByVice(@PathVariable int id,@RequestBody Leave response){
+        leaveService.auditByVice(id,response);
+    }
 
-//    //审批申请
-//    @PutMapping("/leave/{loginNo,empNo,id,leave}")
-//    Leave examineById(String loginNo, String empNo, int id,Leave leave){
-//        String userPower = userService.getUserPower(loginNo);
-//        Power power = powerService.getPower(userPower);
-//        //有权限才可以审批
-//        if(power.getLeavePower()){
-//            //批准事假则请假次数加1
-//            if(leave.getState().equals("批准") && leave.getType().equals("事假")){
-//                int leaveTime = checkService.getLeaveTime(empNo);
-//                leaveTime += 1;
-//                checkService.updateLeaveTime(empNo,leaveTime);
-//            }
-//            return leaveService.examineById(id,leave);
-//        }else {
-//            return null;
-//        }
-//    }
+    //总经理审批外出申请
+    @PutMapping("/leaveAuditManager/{id}")
+    public void auditByManager(@PathVariable int id,@RequestBody Leave response){
+        leaveService.auditByManager(id,response);
+    }
 }

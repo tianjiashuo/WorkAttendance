@@ -1,10 +1,14 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.LeaveDao;
+import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service("leaveService")
@@ -38,12 +42,7 @@ public class LeaveService {
         return leaveDao.queryLeaveById(id);
     }
 
-<<<<<<< HEAD
-    //查询所有人的请假记录
-//    public List<Leave> queryLeave(){
-//        return leaveDao.queryLeave();
-//    }
-=======
+
     /***
      * 查询所有人的请假信息
      * @return
@@ -51,10 +50,56 @@ public class LeaveService {
     public List<Leave> queryAllLeave(String fromDate,String endDate){
         return leaveDao.queryAllLeave(fromDate,endDate);
     }
->>>>>>> 733a38c8842476bdff455cd46aa2f961751a9d14
 
-//    //审批申请
-//    public Leave examineById(int id ,Leave leave){
-//        return leaveDao.updateLeaveByPower(id ,leave);
-//    }
+    /*** shuo***/
+    //项目经理审批外出申请
+    public void auditByDivision(int id , Leave response){
+        if(response.getState()){
+            leaveDao.updateLeaveDivisionPass(id);
+        }
+        else{
+            leaveDao.updateLeaveRefuse(id);
+        }
+    }
+
+    //副经理审批外出申请
+    public void auditByVice(int id ,Leave response){
+        Leave leave = leaveDao.queryLeaveById(id);
+        if(response.getState()){
+            if(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time())>daytoSecond(3)){
+                leaveDao.updateLeaveVicePass(id);
+                leaveDao.updateLeavePass(id);
+            }
+            else{
+                leaveDao.updateLeaveVicePass(id);
+            }
+        }
+        else{
+            leaveDao.updateLeaveRefuse(id);
+        }
+    }
+
+    //总经理审批外出申请
+    public void auditByManager(int id ,Leave response){
+        if(response.getState()){
+            leaveDao.updateLeaveManagerPass(id);
+            leaveDao.updateLeavePass(id);
+        }
+        else{
+            leaveDao.updateLeaveRefuse(id);
+        }
+    }
+
+    public static Long convertTimeToLong(String time) {
+        DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime parse = LocalDateTime.parse(time, ftf);
+        return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()/1000;
+    }
+
+    public static Long daytoSecond(int days){
+        long oneDaySeconds = 86400;
+        return days*oneDaySeconds;
+    }
+
+
 }
