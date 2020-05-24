@@ -22,7 +22,7 @@ public class UserDao {
 
     //根据员工编号得到员工信息
     public User queryUserByEmpNo(String empNo) {
-        String sql = "SELECT * FROM user WHERE empNo=? ";
+        String sql = "SELECT * FROM user WHERE emp_no=? ";
         User user = jdbcTemplate.queryForObject(sql, new UserRowMapper(), empNo);
         return user;
     }
@@ -76,6 +76,17 @@ public class UserDao {
     }
 
     /***
+     * 查询所有员工
+     * @author shuo
+     * @return
+     */
+    public List<User> getAllUser(){
+        String sql = "SELECT * FROM user";
+        List<User> User=jdbcTemplate.query(sql,new UserRowMapper());
+        return User;
+    }
+
+    /***
      * 更新员工状态
      * @author shuo
      * @return
@@ -84,6 +95,7 @@ public class UserDao {
         String sql = "UPDATE user set state=? WHERE emp_no=?";
         jdbcTemplate.update(sql,state,empNo);
     }
+
 
 
 }

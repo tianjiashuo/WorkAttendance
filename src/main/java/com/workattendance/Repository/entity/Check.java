@@ -7,12 +7,10 @@ public class Check{
     private int id;
     private String empNo;
     private String empName;
-    private int days;
-    private int absenteesim;
-    private int late_days;
-    private int leave_early_days;
-
-
+    private int leaveDays;
+    private int absenteeismDays;
+    private int lateDays;
+    private int leaveEarlyDays;
     private String date;
 
     public int getId() {
@@ -39,35 +37,35 @@ public class Check{
         this.empName = empName;
     }
 
-    public int getDays() {
-        return days;
+    public int getLeaveDays() {
+        return leaveDays;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setLeaveDays(int days) {
+        this.leaveDays = days;
     }
 
-    public int getAbsenteesim() {
-        return absenteesim;
+    public int getAbsenteeismDays() {
+        return absenteeismDays;
     }
 
-    public void setAbsenteesim(int absenteesim) {
-        this.absenteesim = absenteesim;
+    public void setAbsenteeismDays(int absenteeismDays) {
+        this.absenteeismDays = absenteeismDays;
     }
 
-    public int getLate_days() {
-        return late_days;
+    public int getLateDays() {
+        return lateDays;
     }
 
-    public void setLate_days(int late_days) {
-        this.late_days = late_days;
+    public void setLateDays(int lateDays) {
+        this.lateDays = lateDays;
     }
 
-    public int getLeave_early_days() {
-        return leave_early_days;
+    public int getLeaveEarlyDays() {
+        return leaveEarlyDays;
     }
-    public void setLeave_early_days(int leave_early_days) {
-        this.leave_early_days = leave_early_days;
+    public void setLeaveEarlyDays(int leave_early_days) {
+        this.leaveEarlyDays = leave_early_days;
     }
     public String getDate() {
         return date;

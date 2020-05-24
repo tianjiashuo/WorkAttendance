@@ -3,7 +3,9 @@ package com.workattendance.Repository.dao;
 /*外出*/
 
 import com.workattendance.Repository.entity.GoOut;
+import com.workattendance.Repository.entity.Leave;
 import com.workattendance.Repository.mappers.GoOutRowMapper;
+import com.workattendance.Repository.mappers.LeaveRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -61,6 +63,7 @@ public class GoOutDao {
         return goOutList;
     }
 
+
     //审核更新goout表
     //部门经理审核外出通过
     public void updategoOutDivisionPass(int id){
@@ -88,5 +91,19 @@ public class GoOutDao {
     public void updategoOutRefuse(int id){
         String sql = "UPDATE goOut set state=2 WHERE id=?";
         jdbcTemplate.update(sql,id);
+    }
+    /***
+     * 查询所有员工的外出情况
+     * @param fromDate
+     * @param endDate
+     * @return
+     */
+    public List<GoOut> queryAllGoOut(String fromDate, String endDate) {
+        String sql = "SELECT * FROM goout WHERE start_time< ? AND end_time >= ? AND state = 1 " +
+                "UNION SELECT * FROM  goout WHERE  start_time > ? AND start_time <= ? AND state =1  " +
+                "ORDER BY id asc";
+
+        List<GoOut> gooutList= jdbcTemplate.query(sql, new GoOutRowMapper(),fromDate,fromDate,fromDate,endDate);
+        return gooutList;
     }
 }

@@ -13,11 +13,11 @@ public class CheckRowMapper implements RowMapper<Check> {
         Check check = new Check();
         check.setId(rs.getInt("id"));
         check.setEmpNo(rs.getString("emp_no"));
-        check.setDays(rs.getInt("days"));
         check.setEmpName(rs.getString("emp_name"));
-        check.setAbsenteesim(rs.getInt("absenteeism"));
-        check.setLate_days(rs.getInt("late_days"));
-        check.setLeave_early_days(rs.getInt("leave_early_days"));
+        check.setLeaveDays(rs.getInt("leave_days"));
+        check.setAbsenteeismDays(rs.getInt("absenteeism_days"));
+        check.setLateDays(rs.getInt("late_days"));
+        check.setLeaveEarlyDays(rs.getInt("leave_early_days"));
         check.setDate(rs.getString("date"));
         return check;
     }

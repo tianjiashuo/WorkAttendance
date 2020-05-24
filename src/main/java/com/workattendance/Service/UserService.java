@@ -1,22 +1,34 @@
 package com.workattendance.Service;
 
+import com.workattendance.Repository.dao.GoOutDao;
+import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Absence;
 import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
 import com.workattendance.Repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 @Service("userService")
+@EnableScheduling
 public class UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private LeaveDao leaveDao;
+    @Autowired
+    private GoOutDao goOutDao;
+
 
     //登录
     public boolean Login (String empNo, String password){
@@ -65,6 +77,36 @@ public class UserService {
       return allState;
     }
 
-    //请假批准后更新员工状态
+    //请假批准后更新员工状态(定时函数:每天凌晨00：30运行)
+    @Scheduled(cron="0 30 0 1/1 * ? ")
+    public void updateUserState(){
+        //获得当天00:00时间戳
+        long nowTime =System.currentTimeMillis();
+        long endTime = nowTime - ((nowTime + TimeZone.getDefault().getRawOffset()) % (24 * 60 * 60 * 1000L));
+        long startTime = endTime - 24*60*60*1000;
+        List<Leave> leaveList = leaveDao.queryAllLeave(convertTimeToString(startTime),convertTimeToString(endTime));
+        for (int i = 0; i < leaveList.size(); i++) {
+            if(convertTimeToLong(leaveList.get(i).getEnd_time()) <= endTime){
+                userDao.updateUserStateByEmpNo(leaveList.get(i).getEmp_no(),"在公司");
+            }
+        }
+        List<GoOut> goOutList = goOutDao.queryAllGoOut(convertTimeToString(startTime),convertTimeToString(endTime));
+        for (int i = 0; i < goOutList.size(); i++) {
+            if(convertTimeToLong(goOutList.get(i).getEnd_time()) <= endTime){
+                userDao.updateUserStateByEmpNo(goOutList.get(i).getEmp_no(),"在公司");
+            }
+        }
+    }
 
+    //时间戳转datetime
+    public static String convertTimeToString(Long time) {
+        DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return ftf.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault()));
+    }
+    //datetime转时间戳
+    public static Long convertTimeToLong(String time) {
+        DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime parse = LocalDateTime.parse(time, ftf);
+        return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
 }

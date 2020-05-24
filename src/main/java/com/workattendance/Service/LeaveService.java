@@ -4,6 +4,7 @@ import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -69,7 +70,8 @@ public class LeaveService {
         Leave leave = leaveDao.queryLeaveById(id);
         Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
         if(response.getState()){
-            if(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time())>daytoSecond(3)){
+            Long days = SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+            if(days<daytoSecond(3)){
                 leaveDao.updateLeaveVicePass(id);
                 leaveDao.updateLeavePass(id);
                 if(isSalary){
@@ -78,6 +80,8 @@ public class LeaveService {
                 else{
                     userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
                 }
+                Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
             }
             else{
                 leaveDao.updateLeaveVicePass(id);
@@ -89,6 +93,7 @@ public class LeaveService {
     }
 
     //总经理审批外出申请
+    //todo 更新leave_balance
     public void auditByManager(int id ,Leave response){
         Leave leave = leaveDao.queryLeaveById(id);
         Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
@@ -101,22 +106,38 @@ public class LeaveService {
             else{
                 userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
             }
+            Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+            Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+            leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
         }
         else{
             leaveDao.updateLeaveRefuse(id);
         }
     }
 
+    //datetime转时间戳
     public static Long convertTimeToLong(String time) {
         DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime parse = LocalDateTime.parse(time, ftf);
         return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()/1000;
     }
 
+    //天转秒
     public static Long daytoSecond(int days){
         long oneDaySeconds = 86400;
         return days*oneDaySeconds;
     }
 
+    //秒转天 四舍五入
+    public static Long SecondtoDay(Long seconds){
+        long oneDaySeconds = 86400;
+        Long days =  seconds/oneDaySeconds;
+        if(seconds%oneDaySeconds < oneDaySeconds/2){
+            return days;
+        }
+        else{
+            return days+1;
+        }
+    }
 
 }
