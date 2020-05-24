@@ -25,7 +25,7 @@ public class AttendanceDao {
     }
 
     /***
-     * 查询某个员工的出勤纪录
+     * 查询某个员工的打卡纪录
      * @author mao
      * @param empNo
      * @return
@@ -37,8 +37,8 @@ public class AttendanceDao {
     }
 
     /***
-     * 返回所有员工的出勤纪录
-     * @author
+     * 返回所有员工的打卡纪录
+     * @author mao
      * @param
      * @return
      */
@@ -58,6 +58,18 @@ public class AttendanceDao {
     public List<Attendance> queryAllAttendanceByDate(String fromDate,String endDate) {
         String sql = "SELECT * FROM attendance WHERE time<=? AND  time>= ? ORDER BY emp_no";
         List<Attendance> attendanceList= jdbcTemplate.query(sql, new AttendanceRowMapper(),(endDate+ " 23:59:59"),(fromDate+" 00:00:00"));
+        return attendanceList;
+    }
+
+    /***
+     * 按时间段查询某个员工的打卡纪录
+     * @author shuo
+     * @param empNo
+     * @return
+     */
+    public List<Attendance> queryAttendanceByEmpNoDate(String empNo,String fromDate,String endDate) {
+        String sql = "SELECT * FROM attendance WHERE time<=? AND  time>= ? AND emp_no = ?";
+        List<Attendance> attendanceList= jdbcTemplate.query(sql, new AttendanceRowMapper(),(endDate+ " 23:59:59"),(fromDate+" 00:00:00"),empNo);
         return attendanceList;
     }
 
