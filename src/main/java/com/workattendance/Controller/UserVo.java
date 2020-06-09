@@ -1,5 +1,6 @@
 package com.workattendance.Controller;
 
+
 public class UserVo {
     private String empId;
     private String passWord;
@@ -18,7 +19,6 @@ public class UserVo {
     public void setPassWord(String passWord) {
         this.passWord = passWord;
     }
-
 
 
 

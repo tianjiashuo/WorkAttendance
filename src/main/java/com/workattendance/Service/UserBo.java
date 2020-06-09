@@ -6,17 +6,15 @@ public class UserBo {
     private int id;
     private String empNo;
     private String empName;
-    private String power;
+    private int power;
     private static UserBo userbo = null;
-
     private UserBo(){
 
     };
 
-    public static  synchronized UserBo getUserBo(){
+    public static synchronized UserBo getUserBo(){
         if(userbo==null){
             UserBo userbo = new UserBo();
-
             return userbo;
         }else{
             return userbo;
@@ -47,11 +45,11 @@ public class UserBo {
         this.empName = empName;
     }
 
-    public String getPower() {
+    public int getPower() {
         return power;
     }
 
-    public void setPower(String power) {
+    public void setPower(int power) {
         this.power = power;
     }
 }

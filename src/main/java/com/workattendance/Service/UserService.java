@@ -31,10 +31,8 @@ public class UserService {
     private GoOutDao goOutDao;
 
 
-
-
     //得到员工权限信息
-    public String getUserPower(String empNo){
+    public int getUserPower(String empNo){
         User user = userDao.queryUserByEmpNo(empNo);
         return user.getPower();
     }
@@ -69,7 +67,8 @@ public class UserService {
       return allState;
     }
 
-    //请假批准后更新员工状态(定时函数:每天凌晨00：30运行)
+
+    //请假到期后更新员工状态(定时函数:每天凌晨00：30运行)
     @Scheduled(cron="0 30 0 1/1 * ? ")
     public void updateUserState(){
         //获得当天00:00时间戳

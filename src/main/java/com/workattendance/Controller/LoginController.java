@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+
     @Autowired
     LogInService loginService;
     @RequestMapping("/doLogin")
@@ -21,4 +22,5 @@ public class LoginController {
         }
         return str;
     }
+
 }
