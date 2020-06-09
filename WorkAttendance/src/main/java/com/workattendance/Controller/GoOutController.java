@@ -68,29 +68,4 @@ public class GoOutController {
         goOutService.auditByManager(id,response);
     }
 
-//    //查询所有人的外出记录
-//    @GetMapping("/goOut/{empNo}")
-//    List<GoOut>  getGoOut(String empNo) {
-//        String userPower = userService.getUserPower(empNo);
-//        Power power = powerService.getPower(userPower);
-//        //有权限才可以查看
-//        if(power.getViewGoOut()){
-//            return goOutService.queryGoOut();
-//        }else{
-//            return null;
-//        }
-//    }
-
-//    //审批申请
-//    @PutMapping("/goOut/{empNo,id,goOut}")
-//    GoOut examineById(String empNo, int id,GoOut goOut){
-//        String userPower = userService.getUserPower(empNo);
-//        Power power = powerService.getPower(userPower);
-//        //有权限才可以审批
-//        if(power.getGoOutPower()){
-//            return goOutService.examineById(id, goOut);
-//        }else {
-//            return null;
-//        }
-//    }
 }

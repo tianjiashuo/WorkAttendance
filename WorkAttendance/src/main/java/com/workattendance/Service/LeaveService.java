@@ -96,7 +96,6 @@ public class LeaveService {
     }
 
     //总经理审批请假申请
-    //todo 更新leave_balance
     public void auditByManager(int id ,Leave response){
 //        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
         System.out.println(userBo.getPower());
