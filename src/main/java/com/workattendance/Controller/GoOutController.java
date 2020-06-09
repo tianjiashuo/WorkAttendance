@@ -70,19 +70,31 @@ public class GoOutController {
         goOutService.deleteGoOutById(id);
     }
 
-    //项目经理审批外出申请
+    /***
+     * 项目经理审批外出申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/goOutAuditDivision/{id}")
     public void auditByDivision(@PathVariable int id,@RequestBody GoOut response){
         goOutService.auditByDivision(id,response);
     }
 
-    //副经理审批外出申请
+    /***
+     * 副经理审批外出申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/goOutAuditVice/{id}")
     public void auditByVice(@PathVariable int id,@RequestBody GoOut response){
         goOutService.auditByVice(id,response);
     }
-
-    //总经理审批外出申请
+    
+    /***
+     * 总经理审批外出申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/goOutAuditManager/{id}")
     public void auditByManager(@PathVariable int id,@RequestBody GoOut response){
         goOutService.auditByManager(id,response);

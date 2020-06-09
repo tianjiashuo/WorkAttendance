@@ -84,19 +84,32 @@ public class LeaveController {
         return leaveService.queryAllLeave(fromDate, endDate);
    }
 
-    //项目经理审批请假申请
+    /***
+     * 项目经理审批请假申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/leaveAuditDivision/{id}")
     public void auditByDivision(@PathVariable int id,@RequestBody Leave response){
         leaveService.auditByDivision(id,response);
     }
 
-    //副经理审批请假申请
+    /***
+     * 副经理审批请假申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/leaveAuditVice/{id}")
     public void auditByVice(@PathVariable int id,@RequestBody Leave response){
         leaveService.auditByVice(id,response);
     }
 
-    //总经理审批请假申请
+
+    /***
+     * 总经理审批请假申请
+     * @author shuo
+     * @return
+     */
     @PutMapping("/leaveAuditManager/{id}")
     public void auditByManager(@PathVariable int id,@RequestBody Leave response){
         leaveService.auditByManager(id,response);
