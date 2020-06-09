@@ -31,8 +31,8 @@ public class LeaveDao {
 
     //员工修改记录
     public Leave updateLeaveByid(int id,Leave leave){
-        String sql = "UPDATE leave_request set type =? ,start_time=? ,end_time=? ,reason=?  WHERE id=?";
-        jdbcTemplate.update(sql, leave.getType(),leave.getStart_time(),leave.getEnd_time(),leave.getReason(),id);
+        String sql = "UPDATE leave_request set type =? ,start_time=? ,end_time=? ,reason=? ,state=? ,division_manager_state=? ,vice_manager_state=? ,manager_state=?  WHERE id=?";
+        jdbcTemplate.update(sql, leave.getType(),leave.getStart_time(),leave.getEnd_time(),leave.getReason(),false,false,false,false,id);
         return queryLeaveById(id);
     }
 
