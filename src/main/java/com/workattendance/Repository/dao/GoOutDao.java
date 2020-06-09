@@ -31,8 +31,8 @@ public class GoOutDao {
 
     //员工修改记录
     public GoOut updateGoOutByid(int id, GoOut goOut){
-        String sql = "UPDATE goout set start_time=? ,end_time=? ,reason=?  WHERE id=?";
-        jdbcTemplate.update(sql, goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),id);
+        String sql = "UPDATE goout set start_time=? ,end_time=? ,reason=? ,state=? ,division_manager_state=? ,vice_manager_state=? ,manager_state=? WHERE id=?";
+        jdbcTemplate.update(sql, goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),false,false,false,false,id);
         return querygoOutById(id);
     }
 
