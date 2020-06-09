@@ -17,11 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //登录
-    @GetMapping("/login/{empNo,password}")
-    Boolean login(@PathVariable String empNo, String password) {
-        return userService.Login(empNo,password);
-    }
+
 
 
     /***

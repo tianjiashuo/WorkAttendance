@@ -2,37 +2,24 @@ package com.workattendance.Controller;
 
 
 public class UserVo {
-    private int id;
-    private String empNo;
-    private String empName;
-    private String power;
-    private UserVo userVo;
-
-    private UserVo(int id,String empNo,String empName,String power){
-        userVo.id = id;
-        userVo.empNo = empNo;
-        userVo.empName = empName;
-        userVo.power = power;
+    private String empId;
+    private String passWord;
+    public String getEmpId() {
+        return empId;
     }
 
-    public UserVo getUserVo() {
-        return userVo;
+    public void setEmpId(String  empId) {
+        this.empId = empId;
     }
 
-    public int getId() {
-        return id;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
-    public String getEmpNo(){ return empNo; }
-    public void  setEmpNo(String empNo){ this.empNo = empNo; }
-    public String getEmpName(){ return empName;}
-    public void  setEmpName(String empName){ this.empName = empName; }
-    public String getPower(){ return power; }
-    public void  setPower(String power){ this.power = power; }
 
 
 }

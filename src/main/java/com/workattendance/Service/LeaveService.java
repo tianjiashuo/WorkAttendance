@@ -3,6 +3,7 @@ package com.workattendance.Service;
 import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
+import com.workattendance.Repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class LeaveService {
     private LeaveDao leaveDao;
     @Autowired
     private UserDao userDao;
+    private UserBo userBo = UserBo.getUserBo();
+    private PowerService powerService;
 
     //请假申请
     public Leave inserLeave(Leave leave){
@@ -92,27 +95,35 @@ public class LeaveService {
         }
     }
 
-    //总经理审批外出申请
+    //总经理审批请假申请
     //todo 更新leave_balance
     public void auditByManager(int id ,Leave response){
-        Leave leave = leaveDao.queryLeaveById(id);
-        Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
-        if(response.getState()){
-            leaveDao.updateLeaveManagerPass(id);
-            leaveDao.updateLeavePass(id);
-            if(isSalary){
-                userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+//        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
+        System.out.println(userBo.getPower());
+//        if(powerService.getLeaveApprovalPower(userBo.getPower())){
+            Leave leave = leaveDao.queryLeaveById(id);
+            Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
+            if(response.getState()){
+                leaveDao.updateLeaveManagerPass(id);
+                leaveDao.updateLeavePass(id);
+                if(isSalary){
+                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+                }
+                else{
+                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+                }
+                Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+                Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
             }
             else{
-                userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+                leaveDao.updateLeaveRefuse(id);
             }
-            Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
-            Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
-            leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
-        }
-        else{
-            leaveDao.updateLeaveRefuse(id);
-        }
+//        }
+//        else{
+//            System.out.println("您没有审核请假权限");
+//        }
+
     }
 
     //datetime转时间戳

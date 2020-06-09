@@ -24,10 +24,6 @@ public class CheckService {
     private UserDao userDao;
     @Autowired
     private AttendanceDao attendanceDao;
-    @Autowired
-    private LeaveDao leaveDao;
-    @Autowired
-    private GoOutDao goOutDao;
 
 
     /***

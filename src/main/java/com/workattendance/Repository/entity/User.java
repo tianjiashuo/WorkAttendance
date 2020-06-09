@@ -13,7 +13,7 @@ public class User {
     private String emp_no;
     private String emp_name;
     private String password;
-    private String power;
+    private int power;
     private String stete;
     private String years;
 
@@ -41,8 +41,8 @@ public class User {
     public void  setEmpName(String empName){ this.emp_name = empName; }
     public String getPassword(){ return password; }
     public void  setPassword(String password){ this.password = password; }
-    public String getPower(){ return power; }
-    public void  setPower(String power){ this.power = power; }
+    public int getPower(){ return power; }
+    public void  setPower(int power){ this.power = power; }
     public String getStete() {
         return stete;
     }

@@ -21,8 +21,6 @@ public class LogInService {
                 userbo.setEmpNo(user.getEmpNo());
                 userbo.setId(user.getId());
                 userbo.setPower(user.getPower());
-                System.out.println(user.getPower());
-                System.out.println(userbo.getPower());
                 return true;
             }else{
                 return false;
