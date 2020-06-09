@@ -20,27 +20,47 @@ public class LeaveService {
     @Autowired
     private UserDao userDao;
 
-    //请假申请
+    /***
+     * 请假申请
+     * @author bai
+     * @return
+     */
     public Leave inserLeave(Leave leave){
         return leaveDao.insert(leave);
     }
 
-    //员工修改申请
+    /***
+     *员工修改申请
+     * @author bai
+     * @return
+     */
     public Leave updateLeaveById(int id, Leave leave){
         return leaveDao.updateLeaveByid(id,leave);
     }
 
-    //删除申请
+    /***
+     * 删除申请
+     * @author bai
+     * @return
+     */
     public void deleteLeaveById(int id){
         leaveDao.deleteLeaveById(id);
     }
 
-    //查询自己的请假记录
+    /***
+     * 查询自己的请假记录
+     * @author bai
+     * @return
+     */
     public List<Leave> queryLeaveByEmpNo (int emp_no){
         return leaveDao.queryLeaveByEmpNo(emp_no);
     }
 
-    //查询一条请假记录详情
+    /***
+     * 查询一条请假记录详情
+     * @author bai
+     * @return
+     */
     public Leave queryLeaveById (int id){
         return leaveDao.queryLeaveById(id);
     }

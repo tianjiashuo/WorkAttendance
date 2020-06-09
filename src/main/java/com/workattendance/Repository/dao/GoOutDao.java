@@ -19,7 +19,11 @@ public class GoOutDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    //添加记录
+    /***
+     * 添加记录
+     * @author bai
+     * @return
+     */
     public GoOut insert(GoOut goOut) {
         GoOut goOut1 = new GoOut();
         String sql = "INSERT INTO goout (emp_no,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state,emp_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -29,34 +33,54 @@ public class GoOutDao {
         return goOut1;
     }
 
-    //员工修改记录
+    /***
+     * 员工修改记录
+     * @author bai
+     * @return
+     */
     public GoOut updateGoOutByid(int id, GoOut goOut){
         String sql = "UPDATE goout set start_time=? ,end_time=? ,reason=? ,state=? ,division_manager_state=? ,vice_manager_state=? ,manager_state=? WHERE id=?";
         jdbcTemplate.update(sql, goOut.getStart_time(),goOut.getEnd_time(),goOut.getReason(),false,false,false,false,id);
         return querygoOutById(id);
     }
 
-    //根据id删除记录
+    /***
+     * 根据id删除记录
+     * @author bai
+     * @return
+     */
     public void deletegoOutById(int id) {
         String sql = "DELETE FROM goout WHERE id=?";
         jdbcTemplate.update(sql, id);
     }
 
-    //根据id查询
+    /***
+     * 根据id查询
+     * @author bai
+     * @return
+     */
     public GoOut querygoOutById(int id) {
         String sql = "SELECT * FROM goout WHERE id=?";
         GoOut goOut= jdbcTemplate.queryForObject(sql, new GoOutRowMapper(), id);
         return goOut;
     }
 
-    //根据员工编号查询记录
+    /***
+     * 根据员工编号查询记录
+     * @author bai
+     * @return
+     */
     public List<GoOut> querygoOutByEmpNo(int emp_no) {
         String sql = "SELECT * FROM goout WHERE emp_no=? ORDER BY id";
         List<GoOut> goOutList= jdbcTemplate.query(sql, new GoOutRowMapper(), emp_no);
         return goOutList;
     }
 
-    //返回所有员工记录
+    /***
+     * 返回所有员工记录
+     * @author bai
+     * @return
+     */
     public List<GoOut> querygoOut() {
         String sql = "SELECT * FROM goout ORDER BY id";
         List<GoOut> goOutList= jdbcTemplate.query(sql, new GoOutRowMapper());

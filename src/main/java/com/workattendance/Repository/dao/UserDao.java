@@ -96,7 +96,11 @@ public class UserDao {
         jdbcTemplate.update(sql,state,empNo);
     }
 
-    //员工修改密码
+    /***
+     * 员工修改密码
+     * @author bai
+     * @return
+     */
     public Boolean updatePasswordByEmpNo(String empNo, String oldPassword,String newPassword){
         boolean isChange = false;
         User user = queryUserByEmpNo(empNo);

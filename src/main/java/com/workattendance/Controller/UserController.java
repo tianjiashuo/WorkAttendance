@@ -30,7 +30,11 @@ public class UserController {
         return  userService.getAllstate(df.format(day));
     }
 
-    //修改密码,此处oldPassword是哈希加密后的
+    /***
+     * 修改密码,此处oldPassword是哈希加密后的
+     * @author bai
+     * @return
+     */
     @PutMapping("/user/{empNo}")
     public Boolean updatePasswordByEmpNo(@PathVariable String empNo, @RequestBody String passwords){
         return userService.updatePasswordByEmpNo(empNo,passwords);

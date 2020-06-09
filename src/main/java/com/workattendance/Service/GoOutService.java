@@ -18,32 +18,56 @@ public class GoOutService {
     @Autowired
     private UserDao userDao;
 
-    //外出申请
+    /***
+     * 外出申请
+     * @author bai
+     * @return
+     */
     public GoOut inserGoOut(GoOut goOut){
         return goOutDao.insert(goOut);
     }
 
-    //员工修改申请
+    /***
+     * 员工修改申请
+     * @author bai
+     * @return
+     */
     public GoOut updateGoOutById(int id, GoOut goOut){
         return goOutDao.updateGoOutByid(id, goOut);
     }
 
-    //删除申请
+    /***
+     * 删除申请
+     * @author bai
+     * @return
+     */
     public void deleteGoOutById(int id){
         goOutDao.deletegoOutById(id);
     }
 
-    //查询自己的外出记录
+    /***
+     * 查询自己的外出记录
+     * @author bai
+     * @return
+     */
     public List<GoOut> queryGoOutByEmpNo (int empNo){
         return goOutDao.querygoOutByEmpNo(empNo);
     }
 
-    //查询一条外出记录详情
+    /***
+     * 查询一条外出记录详情
+     * @author bai
+     * @return
+     */
     public GoOut queryGoOutById (int id){
         return goOutDao.querygoOutById(id);
     }
 
-    //查询所有人的外出记录
+    /***
+     * 查询所有人的外出记录
+     * @author bai
+     * @return
+     */
     public List<GoOut> queryGoOut(){
         return goOutDao.querygoOut();
     }
