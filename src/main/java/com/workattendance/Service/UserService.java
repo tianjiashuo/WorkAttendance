@@ -101,7 +101,11 @@ public class UserService {
         return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    //员工修改密码
+    /***
+     * 员工修改密码
+     * @author bai
+     * @return
+     */
     public Boolean updatePasswordByEmpNo(String empNo, String passwords) {
         String temp = passwords.split(":|,")[1];
         String oldPassword = temp.substring(1);
