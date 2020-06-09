@@ -30,15 +30,23 @@ public class UserService {
     private GoOutDao goOutDao;
 
 
-    //登录
-    public boolean Login (String empNo, String password){
-        User user = userDao.queryUserByEmpNo(empNo);
-        //判断密码是否正确
-        if(user.getPassword().equals(password)){
-            return true;
-        }else{
-            return false;
-        }
+//    //登录
+//    public boolean Login (String empNo, String password){
+//        User user = userDao.queryUserByEmpNo(empNo);
+//        //判断密码是否正确
+//        if(user.getPassword().equals(password)){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
+
+    //通过员工号查到密码
+    public Map<String,String> login(String empNo){
+        Map<String,String> param = new HashMap<>();
+        String password = userDao.queryUserByEmpNo(empNo).getPassword();
+        param.put(empNo,password);
+        return param;
     }
 
     //得到员工权限信息
@@ -77,7 +85,8 @@ public class UserService {
       return allState;
     }
 
-    //请假批准后更新员工状态(定时函数:每天凌晨00：30运行)
+
+    //请假到期后更新员工状态(定时函数:每天凌晨00：30运行)
     @Scheduled(cron="0 30 0 1/1 * ? ")
     public void updateUserState(){
         //获得当天00:00时间戳
