@@ -1,5 +1,6 @@
 package com.workattendance.Service;
 
+import com.workattendance.Controller.UserVo;
 import com.workattendance.Repository.dao.GoOutDao;
 import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.UserDao;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.Log;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -30,16 +32,7 @@ public class UserService {
     private GoOutDao goOutDao;
 
 
-    //登录
-    public boolean Login (String empNo, String password){
-        User user = userDao.queryUserByEmpNo(empNo);
-        //判断密码是否正确
-        if(user.getPassword().equals(password)){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
     //得到员工权限信息
     public String getUserPower(String empNo){
