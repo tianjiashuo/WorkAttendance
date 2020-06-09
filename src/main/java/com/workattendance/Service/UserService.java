@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import sun.rmi.runtime.Log;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -101,5 +100,13 @@ public class UserService {
         DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime parse = LocalDateTime.parse(time, ftf);
         return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    //员工修改密码
+    public Boolean updatePasswordByEmpNo(String empNo, String passwords) {
+        String temp = passwords.split(":|,")[1];
+        String oldPassword = temp.substring(1);
+        String newPassword = passwords.split(":|}")[2];
+        return userDao.updatePasswordByEmpNo(empNo, oldPassword,newPassword);
     }
 }

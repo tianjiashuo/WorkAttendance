@@ -2,9 +2,7 @@ package com.workattendance.Controller;
 
 import com.workattendance.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +28,12 @@ public class UserController {
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return  userService.getAllstate(df.format(day));
+    }
+
+    //修改密码,此处oldPassword是哈希加密后的
+    @PutMapping("/user/{empNo}")
+    public Boolean updatePasswordByEmpNo(@PathVariable String empNo, @RequestBody String passwords){
+        return userService.updatePasswordByEmpNo(empNo,passwords);
     }
 
 }

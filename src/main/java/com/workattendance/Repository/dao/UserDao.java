@@ -96,6 +96,23 @@ public class UserDao {
         jdbcTemplate.update(sql,state,empNo);
     }
 
+    //员工修改密码
+    public Boolean updatePasswordByEmpNo(String empNo, String oldPassword,String newPassword){
+        boolean isChange = false;
+        User user = queryUserByEmpNo(empNo);
+        String password = user.getPassword().hashCode() + "";
+        //说明密码正确
+        if( oldPassword.equals(password)){
+            String sql2 = "UPDATE user set password=? WHERE emp_no=?";
+            jdbcTemplate.update(sql2, newPassword,empNo);
+        }
+        User newUser = queryUserByEmpNo(empNo);
+        if(newUser.getPassword().equals(newPassword)){
+            isChange = true;
+        }
+        return isChange;
+    }
+
 
 
 }
