@@ -77,8 +77,12 @@ public class LeaveService {
         return leaveDao.queryAllLeave(fromDate,endDate);
     }
 
-    /*** shuo***/
-    //项目经理审批外出申请
+
+    /***
+     * 项目经理审批外出申请
+     * @author shuo
+     * @return
+     */
     public void auditByDivision(int id , Leave response){
         if(response.getState()){
             leaveDao.updateLeaveDivisionPass(id);
@@ -87,8 +91,11 @@ public class LeaveService {
             leaveDao.updateLeaveRefuse(id);
         }
     }
-
-    //副经理审批外出申请
+    /***
+     * 副经理审批外出申请
+     * @author shuo
+     * @return
+     */
     public void auditByVice(int id ,Leave response){
         Leave leave = leaveDao.queryLeaveById(id);
         Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
@@ -115,7 +122,11 @@ public class LeaveService {
         }
     }
 
-    //总经理审批请假申请
+    /***
+     * 总经理审批请假申请
+     * @author shuo
+     * @return
+     */
     public void auditByManager(int id ,Leave response){
 //        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
         System.out.println(userBo.getPower());
@@ -145,20 +156,34 @@ public class LeaveService {
 
     }
 
-    //datetime转时间戳
+
+    /***
+     * datetime转时间戳
+     * @author shuo
+     * @return
+     */
     public static Long convertTimeToLong(String time) {
         DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime parse = LocalDateTime.parse(time, ftf);
         return LocalDateTime.from(parse).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()/1000;
     }
 
-    //天转秒
+
+    /***
+     * 天转秒
+     * @author shuo
+     * @return
+     */
     public static Long daytoSecond(int days){
         long oneDaySeconds = 86400;
         return days*oneDaySeconds;
     }
 
-    //秒转天 四舍五入
+    /***
+     * 秒转天 四舍五入
+     * @author shuo
+     * @return
+     */
     public static Long SecondtoDay(Long seconds){
         long oneDaySeconds = 86400;
         Long days =  seconds/oneDaySeconds;

@@ -68,7 +68,11 @@ public class UserService {
     }
 
 
-    //请假到期后更新员工状态(定时函数:每天凌晨00：30运行)
+    /***
+     * 请假到期后更新员工状态(定时函数:每天凌晨00：30运行)
+     * @author shuo
+     * @return
+     */
     @Scheduled(cron="0 30 0 1/1 * ? ")
     public void updateUserState(){
         //获得当天00:00时间戳
