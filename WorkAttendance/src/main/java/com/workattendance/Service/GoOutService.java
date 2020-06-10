@@ -84,7 +84,7 @@ public class GoOutService {
      */
     public void auditByDivision(int id ,GoOut response){
         if(userBo.getPower()!=0){
-            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+            if(powerDao.queryGooutApprovalPowerById(userBo.getPower())) {
                 if(response.getState()){
                     goOutDao.updategoOutDivisionPass(id);
                 }
@@ -107,7 +107,7 @@ public class GoOutService {
      */
     public void auditByVice(int id ,GoOut response){
         if(userBo.getPower()!=0){
-            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+            if(powerDao.queryGooutApprovalPowerById(userBo.getPower())) {
                 GoOut goOut = goOutDao.querygoOutById(id);
                 if(response.getState()){
                         if(convertTimeToLong(goOut.getEnd_time())-convertTimeToLong(goOut.getStart_time())>daytoSecond(3)){
@@ -137,7 +137,7 @@ public class GoOutService {
      */
     public void auditByManager(int id ,GoOut response){
         if(userBo.getPower()!=0){
-            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+            if(powerDao.queryGooutApprovalPowerById(userBo.getPower())) {
                 GoOut goOut = goOutDao.querygoOutById(id);
                 if(response.getState()){
                     goOutDao.updategoOutManagerPass(id);

@@ -8,5 +8,4 @@ public class PowerService {
     @Autowired
     private PowerDao powerDao;
 
-
 }
