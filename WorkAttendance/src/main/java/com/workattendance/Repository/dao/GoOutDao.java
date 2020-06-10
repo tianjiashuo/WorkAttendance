@@ -120,6 +120,7 @@ public class GoOutDao {
      * 查询所有员工的外出情况
      * @param fromDate
      * @param endDate
+     * @author mao
      * @return
      */
     public List<GoOut> queryAllGoOut(String fromDate, String endDate) {

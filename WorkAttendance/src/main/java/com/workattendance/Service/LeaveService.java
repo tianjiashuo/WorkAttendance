@@ -74,6 +74,7 @@ public class LeaveService {
 
     /***
      * 查询所有人的请假信息
+     * @author mao
      * @return
      */
     public List<Leave> queryAllLeave(String fromDate,String endDate){

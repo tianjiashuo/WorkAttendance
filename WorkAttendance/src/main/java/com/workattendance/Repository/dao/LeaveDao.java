@@ -84,6 +84,7 @@ public class LeaveDao {
      * 查询所有员工的请假情况
      * @param fromDate
      * @param endDate
+     * mao
      * @return
      */
     public List<Leave> queryAllLeave(String fromDate,String endDate) {

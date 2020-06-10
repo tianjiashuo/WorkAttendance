@@ -40,6 +40,7 @@ public class UserService {
     /***
      * 获得所有员工的状态
      * @param date
+     * @author mao
      * @return
      */
     public HashMap<String,List> getAllstate(String date){
