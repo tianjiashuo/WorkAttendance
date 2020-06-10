@@ -4,6 +4,8 @@ import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.PowerDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
+import com.workattendance.Repository.entity.Leave_balances;
+import com.workattendance.Repository.entity.Leave_types;
 import com.workattendance.Repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
@@ -208,5 +210,26 @@ public class LeaveService {
             return days+1;
         }
     }
+
+    //根据工龄查员工编号
+    public List<User> queryEmpNoByYears(int lowYear, int highYear){
+        return leaveDao.queryEmpNoByYears(lowYear,highYear);
+    }
+
+    //查询假期编号
+    public List<Leave_types> queryLeaveType(int id){
+        return leaveDao.queryLeaveType(id);
+    }
+
+    //更改可休假期
+    public void setLeaveBalances(Leave_balances lb){
+        leaveDao.setLeaveBalances(lb);
+    }
+
+    //设置年假
+    public void setYearLeave(int emp_no,int days){
+        leaveDao.updateExistLeaveBalances(emp_no,days);
+    }
+
 
 }

@@ -3,7 +3,13 @@ package com.workattendance.Repository.dao;
 /*请假*/
 
 import com.workattendance.Repository.entity.Leave;
+import com.workattendance.Repository.entity.Leave_balances;
+import com.workattendance.Repository.entity.Leave_types;
+import com.workattendance.Repository.entity.User;
 import com.workattendance.Repository.mappers.LeaveRowMapper;
+import com.workattendance.Repository.mappers.Leave_balancesRowMapper;
+import com.workattendance.Repository.mappers.Leave_typesRowMapper;
+import com.workattendance.Repository.mappers.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -133,6 +139,39 @@ public class LeaveDao {
     public void updateLeaveRefuse(int id){
         String sql = "UPDATE leave_request set state=2 WHERE id=?";
         jdbcTemplate.update(sql,id);
+    }
+
+    //设置可休假期
+    public void setLeaveBalances(Leave_balances lb){
+        String sql = "INSERT INTO leave_balances (emp_no,leave_id,days,balances) VALUES(?, ?, ?, ?)";
+        jdbcTemplate.update(sql,lb.getEmpNo(),lb.getLeaveId(),lb.getDays(),lb.getBalances());
+    }
+
+
+    public Leave_balances queryLBalancesByempNoAndLd(int empNo,int leaveId){
+        String sql = "SELECT * FROM leave_balances WHERE emp_no=? AND leave_id=?";
+        Leave_balances lb = jdbcTemplate.queryForObject(sql,new Leave_balancesRowMapper(),empNo,leaveId);
+        return lb;
+    }
+
+    //员工此前设置过年假 更新
+    public void updateExistLeaveBalances(int emp_no,int days){
+        String sql = "UPDATE leave_balances set days=?,balances=? WHERE emp_no=? AND leave_id=4";
+        jdbcTemplate.update(sql,days,days,emp_no);
+    }
+
+    //根据工龄筛选员工
+    public List<User> queryEmpNoByYears(int lowYear, int highYear){
+        String sql = "SELECT * FROM user WHERE years >=? AND years<=?";
+        List<User> users = jdbcTemplate.query(sql, new UserRowMapper(), lowYear, highYear);
+        return users;
+    }
+
+    //查询假期id
+    public List<Leave_types> queryLeaveType(int id){
+        String sql = "SELECT * FROM leave_types WHERE id=?";
+        List<Leave_types> lt= jdbcTemplate.query(sql, new Leave_typesRowMapper(),id);
+        return lt;
     }
 
 }

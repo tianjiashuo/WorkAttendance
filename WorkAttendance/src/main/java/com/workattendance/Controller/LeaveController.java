@@ -1,8 +1,6 @@
 package com.workattendance.Controller;
 
-import com.workattendance.Repository.entity.GoOut;
-import com.workattendance.Repository.entity.Leave;
-import com.workattendance.Repository.entity.Power;
+import com.workattendance.Repository.entity.*;
 import com.workattendance.Service.CheckService;
 import com.workattendance.Service.LeaveService;
 import com.workattendance.Service.PowerService;
@@ -113,5 +111,27 @@ public class LeaveController {
     @PutMapping("/leaveAuditManager/{id}")
     public void auditByManager(@PathVariable int id,@RequestBody Leave response){
         leaveService.auditByManager(id,response);
+    }
+
+    //查询假期id
+    @GetMapping("/queryLeaveTypes/{id}")
+    List<Leave_types> queryLeaveTypes(@PathVariable int id){return leaveService.queryLeaveType(id);}
+
+    //根据工龄查询员工
+    @GetMapping("/queryEmpNoByYears/{lowyear}/{highyear}")
+    List<User> queryEmpNoByYears(@PathVariable int lowyear, @PathVariable int highyear){
+        return leaveService.queryEmpNoByYears(lowyear,highyear);
+    }
+
+    //设置假期
+    @PutMapping("/seLleave_balances")
+    public void setLeaveBalances(@RequestBody Leave_balances lb){
+        leaveService.setLeaveBalances(lb);
+    }
+
+    //设置年假
+    @PutMapping("setYearLeave/{emp_no}/{days}")
+    public void setYearLeave(@PathVariable int emp_no, @PathVariable int days){
+        leaveService.setYearLeave(emp_no,days);
     }
 }
