@@ -2,14 +2,11 @@ package com.workattendance.Repository.dao;
 
 /*请假*/
 
-import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
-import com.workattendance.Repository.mappers.GoOutRowMapper;
 import com.workattendance.Repository.mappers.LeaveRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.LeaveDao;
+import com.workattendance.Repository.dao.PowerDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
 import com.workattendance.Repository.entity.User;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,10 +20,9 @@ public class LeaveService {
 
     @Autowired
     private LeaveDao leaveDao;
-    @Autowired
-    private UserDao userDao;
     private UserBo userBo = UserBo.getUserBo();
-    private PowerService powerService;
+    @Autowired
+    private PowerDao powerDao;
 
     /***
      * 请假申请
@@ -84,11 +85,19 @@ public class LeaveService {
      * @return
      */
     public void auditByDivision(int id , Leave response){
-        if(response.getState()){
-            leaveDao.updateLeaveDivisionPass(id);
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+                if (response.getState()) {
+                    leaveDao.updateLeaveDivisionPass(id);
+                } else {
+                    leaveDao.updateLeaveRefuse(id);
+                }
+            }else{
+                System.out.println("您没有审核请假权限");
+                }
         }
         else{
-            leaveDao.updateLeaveRefuse(id);
+            System.out.println("请先登陆");
         }
     }
     /***
@@ -97,29 +106,34 @@ public class LeaveService {
      * @return
      */
     public void auditByVice(int id ,Leave response){
-        Leave leave = leaveDao.queryLeaveById(id);
-        Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
-        if(response.getState()){
-            Long days = SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
-            if(days<daytoSecond(3)){
-                leaveDao.updateLeaveVicePass(id);
-                leaveDao.updateLeavePass(id);
-                if(isSalary){
-//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
-                    Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
-                    leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())){
+                Leave leave = leaveDao.queryLeaveById(id);
+                Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
+                if(response.getState()){
+                    Long days = SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+                    if(days<daytoSecond(3)){
+                        leaveDao.updateLeaveVicePass(id);
+                        leaveDao.updateLeavePass(id);
+                        if(isSalary){
+                            Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                            leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+                        }
+                    }
+                    else{
+                        leaveDao.updateLeaveVicePass(id);
+                    }
+                    }
+                    else{
+                    leaveDao.updateLeaveRefuse(id);
+                    }
                 }
-//                else{
-//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
-//                }
-
-            }
-            else{
-                leaveDao.updateLeaveVicePass(id);
-            }
+                else{
+                    System.out.println("您没有审核请假权限");
+                }
         }
         else{
-            leaveDao.updateLeaveRefuse(id);
+            System.out.println("请先登陆");
         }
     }
 
@@ -129,28 +143,30 @@ public class LeaveService {
      * @return
      */
     public void auditByManager(int id ,Leave response){
-        System.out.println(userBo.getPower());
-//        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
-
-//        if(powerService.getLeaveApprovalPower(userBo.getPower())){
-            Leave leave = leaveDao.queryLeaveById(id);
-            Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
-            if(response.getState()){
-                leaveDao.updateLeaveManagerPass(id);
-                leaveDao.updateLeavePass(id);
-                if(isSalary){
-                    Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
-                    Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
-                    leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())){
+                Leave leave = leaveDao.queryLeaveById(id);
+                Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
+                if(response.getState()){
+                    leaveDao.updateLeaveManagerPass(id);
+                    leaveDao.updateLeavePass(id);
+                    if(isSalary){
+                        Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+                        Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                        leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+                    }
+                }
+                else{
+                    leaveDao.updateLeaveRefuse(id);
                 }
             }
             else{
-                leaveDao.updateLeaveRefuse(id);
+                System.out.println("您没有审核请假权限");
             }
-//        }
-//        else{
-//            System.out.println("您没有审核请假权限");
-//        }
+        }
+        else{
+            System.out.println("请先登陆");
+        }
 
     }
 

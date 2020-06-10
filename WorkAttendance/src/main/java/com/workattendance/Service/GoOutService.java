@@ -1,6 +1,7 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.GoOutDao;
+import com.workattendance.Repository.dao.PowerDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
@@ -15,8 +16,9 @@ public class GoOutService {
 
     @Autowired
     private GoOutDao goOutDao;
+    private UserBo userBo = UserBo.getUserBo();
     @Autowired
-    private UserDao userDao;
+    private PowerDao powerDao;
 
     /***
      * 外出申请
@@ -81,11 +83,20 @@ public class GoOutService {
      * @return
      */
     public void auditByDivision(int id ,GoOut response){
-        if(response.getState()){
-            goOutDao.updategoOutDivisionPass(id);
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+                if(response.getState()){
+                    goOutDao.updategoOutDivisionPass(id);
+                }
+                else{
+                    goOutDao.updategoOutRefuse(id);
+                }
+            }else{
+                System.out.println("您没有审核请假权限");
+            }
         }
         else{
-            goOutDao.updategoOutRefuse(id);
+            System.out.println("请先登陆");
         }
     }
 
@@ -95,18 +106,27 @@ public class GoOutService {
      * @return
      */
     public void auditByVice(int id ,GoOut response){
-        GoOut goOut = goOutDao.querygoOutById(id);
-        if(response.getState()){
-                if(convertTimeToLong(goOut.getEnd_time())-convertTimeToLong(goOut.getStart_time())>daytoSecond(3)){
-                    goOutDao.updategoOutVicePass(id);
-                    goOutDao.updategoOutPass(id);
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+                GoOut goOut = goOutDao.querygoOutById(id);
+                if(response.getState()){
+                        if(convertTimeToLong(goOut.getEnd_time())-convertTimeToLong(goOut.getStart_time())>daytoSecond(3)){
+                            goOutDao.updategoOutVicePass(id);
+                            goOutDao.updategoOutPass(id);
+                        }
+                        else{
+                            goOutDao.updategoOutVicePass(id);
+                        }
                 }
                 else{
-                    goOutDao.updategoOutVicePass(id);
+                    goOutDao.updategoOutRefuse(id);
                 }
+            }else{
+                System.out.println("您没有审核请假权限");
+            }
         }
         else{
-            goOutDao.updategoOutRefuse(id);
+            System.out.println("请先登陆");
         }
     }
 
@@ -116,14 +136,22 @@ public class GoOutService {
      * @return
      */
     public void auditByManager(int id ,GoOut response){
-        GoOut goOut = goOutDao.querygoOutById(id);
-        if(response.getState()){
-            goOutDao.updategoOutManagerPass(id);
-            goOutDao.updategoOutPass(id);
-//            userDao.updateUserStateByEmpNo(goOut.getEmp_no(),"外出");
+        if(userBo.getPower()!=0){
+            if(powerDao.queryLeaveApprovalPowerById(userBo.getPower())) {
+                GoOut goOut = goOutDao.querygoOutById(id);
+                if(response.getState()){
+                    goOutDao.updategoOutManagerPass(id);
+                    goOutDao.updategoOutPass(id);
+                }
+                else{
+                    goOutDao.updategoOutRefuse(id);
+                }
+            }else{
+                System.out.println("您没有审核请假权限");
+            }
         }
         else{
-            goOutDao.updategoOutRefuse(id);
+            System.out.println("请先登陆");
         }
     }
 

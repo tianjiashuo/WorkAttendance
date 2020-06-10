@@ -91,7 +91,7 @@ public class UserService {
         }
         List<GoOut> goOutList = goOutDao.queryAllGoOut(convertTimeToString(startTime),convertTimeToString(endTime));
         for (int i = 0; i < goOutList.size(); i++) {
-            if(convertTimeToLong(goOutList.get(i).getStart_time()) >= startTime){
+            if(convertTimeToLong(goOutList.get(i).getStart_time()) >= startTime && convertTimeToLong(goOutList.get(i).getStart_time())<=endTime){
                 userDao.updateUserStateByEmpNo(goOutList.get(i).getEmp_no(),"外出");
             }
         }
