@@ -7,7 +7,7 @@ public class UserBo {
     private String empNo;
     private String empName;
     private int power;
-    private static UserBo userbo = null;
+    private static UserBo userbo = new UserBo();
     private UserBo(){
 
     };

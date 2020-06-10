@@ -129,8 +129,9 @@ public class LeaveService {
      * @return
      */
     public void auditByManager(int id ,Leave response){
-//        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
         System.out.println(userBo.getPower());
+//        System.out.println(powerService.getLeaveApprovalPower(userBo.getPower()));
+
 //        if(powerService.getLeaveApprovalPower(userBo.getPower())){
             Leave leave = leaveDao.queryLeaveById(id);
             Boolean isSalary = leaveDao.queryLeaveSalary(leave.getType());
@@ -138,14 +139,10 @@ public class LeaveService {
                 leaveDao.updateLeaveManagerPass(id);
                 leaveDao.updateLeavePass(id);
                 if(isSalary){
-//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
                     Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
                     Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
                     leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
                 }
-//                else{
-//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
-//                }
             }
             else{
                 leaveDao.updateLeaveRefuse(id);
