@@ -1,8 +1,6 @@
 package com.workattendance.Service;
 
-import
-        com.workattendance.Repository.dao.AttendanceDao;
-import com.workattendance.Repository.dao.PowerDao;
+import com.workattendance.Repository.dao.AttendanceDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Attendance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +9,26 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-
 @Service("attendanceServer")
 public class AttendanceService {
 
     @Autowired
     private AttendanceDao attendanceDao;
-    @Autowired
-    private PowerDao powerDao;
 
 
-
+//    //添加打卡记录
+//    public Attendance insertAttendance(Attendance attendance){
+//        return attendanceDao.insert(attendance);
+//    }
 
     /***
      * 查询自己的打卡纪录
-     * @author mao
+     * @param empNo
      * @return
      */
-    public  List<Attendance> queryAttendance (){
-        return attendanceDao.queryAttendanceByEmpNo(UserBo.getUserBo().getEmpNo());
+    public List<Attendance> queryAttendanceByEmpNo (String empNo){
+
+        return attendanceDao.queryAttendanceByEmpNo(empNo);
     }
 
     /***
@@ -38,12 +37,7 @@ public class AttendanceService {
      * @return
      */
     public List<Attendance> queryAllAttendance(){
-        if(powerDao.queryViewAllAttendancePowerById(UserBo.getUserBo().getPower())){
-            return attendanceDao.queryAllAttendance();
-        }else{
-            return null;
-        }
-
+        return attendanceDao.queryAllAttendance();
     }
 
     /***
@@ -54,13 +48,7 @@ public class AttendanceService {
      * @return
      */
     public List<Attendance> queryAttendanceByDate(String fromDate,String endDate){
-
-
-        if(powerDao.queryViewOwnAttendancePowerById(UserBo.getUserBo().getPower())){
-            return attendanceDao.queryAllAttendanceByDate(fromDate,endDate);
-        }else{
-            return null;
-        }
+        return attendanceDao.queryAllAttendanceByDate(fromDate,endDate);
     }
 
     /***
@@ -70,11 +58,7 @@ public class AttendanceService {
      * @return
      */
     public List<Attendance> queryAttendanceByEmpId(String emp_id){
-        if(powerDao.queryViewAllAttendancePowerById(UserBo.getUserBo().getPower())){
-            return attendanceDao.queryAttendanceByEmpNo(emp_id);
-        }else{
-            return null;
-        }
+        return attendanceDao.queryAttendanceByEmpNo(emp_id);
     }
 
 

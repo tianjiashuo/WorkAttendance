@@ -24,8 +24,7 @@ public class CheckService {
     private UserDao userDao;
     @Autowired
     private AttendanceDao attendanceDao;
-    @Autowired
-    private PowerDao powerDao;
+
 
     /***
      * 根据日期查询check
@@ -35,13 +34,7 @@ public class CheckService {
      * @return
      */
     public List<Check> getALLCheckByDate(String from,String end){
-
-        if(powerDao.queryViewCheckPowerById(UserBo.getUserBo().getPower())){
-            return checkDao.queryAllCheckByDay(from,end);
-        }else{
-            return null;
-        }
-
+        return checkDao.queryAllCheckByDay(from,end);
     }
 
     //查询某天某位用户的check

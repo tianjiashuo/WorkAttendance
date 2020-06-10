@@ -1,7 +1,6 @@
 package com.workattendance.Service;
 
 
-import com.workattendance.Repository.entity.User;
 
 public class UserBo {
     private int id;
@@ -12,21 +11,14 @@ public class UserBo {
     private UserBo(){
 
     };
-    public UserBo(User u){
-        this.power = u.getPower();
-    }
 
     public static synchronized UserBo getUserBo(){
         if(userbo==null){
-            userbo = new UserBo();
+            UserBo userbo = new UserBo();
             return userbo;
         }else{
             return userbo;
         }
-    }
-    public static UserBo getUserBo(User u){
-        userbo = new UserBo(u);
-        return userbo;
     }
 
     public int getId() {

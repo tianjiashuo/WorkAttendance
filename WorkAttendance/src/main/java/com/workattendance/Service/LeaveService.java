@@ -74,7 +74,6 @@ public class LeaveService {
 
     /***
      * 查询所有人的请假信息
-     * @author mao
      * @return
      */
     public List<Leave> queryAllLeave(String fromDate,String endDate){
@@ -219,17 +218,42 @@ public class LeaveService {
 
     //查询假期编号
     public List<Leave_types> queryLeaveType(int id){
-        return leaveDao.queryLeaveType(id);
+
+    return leaveDao.queryLeaveType(id);
+
     }
 
     //更改可休假期
     public void setLeaveBalances(Leave_balances lb){
-        leaveDao.setLeaveBalances(lb);
+
+        //leaveDao.setLeaveBalances(lb);
+        if(userBo.getPower()!=0){
+            if(powerDao.querySetLeaveTypesPowerById(userBo.getPower())){
+                leaveDao.setLeaveBalances(lb);
+            }
+            else{
+                System.out.println("您没有审核请假权限");
+            }
+        }
+        else {
+            System.out.println("请先登陆");
+        }
     }
 
     //设置年假
     public void setYearLeave(int emp_no,int days){
-        leaveDao.updateExistLeaveBalances(emp_no,days);
+        //leaveDao.updateExistLeaveBalances(emp_no,days);
+        if(userBo.getPower()!=0){
+            if(powerDao.querySetLeaveTypesPowerById(userBo.getPower())){
+                leaveDao.updateExistLeaveBalances(emp_no,days);
+            }
+            else{
+                System.out.println("您没有审核请假权限");
+            }
+        }
+        else {
+            System.out.println("请先登陆");
+        }
     }
 
 

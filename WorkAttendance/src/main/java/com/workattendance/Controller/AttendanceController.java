@@ -34,24 +34,14 @@ public class AttendanceController {
     /***
      * 查询自己的打卡记录
      * @author mao
-     * @param
+     * @param empNo
      * @return
      */
-    @GetMapping("/attendance")
-    List<Attendance> getAttendanceByEmpNo() {
-        return attendanceService.queryAttendance();
+    @GetMapping("/attendance/byEmp/{empNo}")
+    List<Attendance> getAttendanceByEmpNo(@PathVariable String empNo) {
+        return attendanceService.queryAttendanceByEmpNo(empNo);
     }
 
-    /***
-     * 查询某人的打卡记录
-     * @author mao
-     * @param
-     * @return
-     */
-    @GetMapping("/attendance/byEmpNo/{empNo}")
-    List<Attendance> getAttendanceByEmpNo(@PathVariable String empNo) {
-        return attendanceService.queryAttendanceByEmpId(empNo);
-    }
 
     /***
      * 查询所有人的出勤记录
