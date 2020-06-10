@@ -1,6 +1,7 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.LeaveDao;
+import com.workattendance.Repository.dao.PowerDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
 import com.workattendance.Repository.entity.User;
@@ -21,7 +22,8 @@ public class LeaveService {
     @Autowired
     private UserDao userDao;
     private UserBo userBo = UserBo.getUserBo();
-    private PowerService powerService;
+   @Autowired
+   private PowerDao powerDao;
 
     //请假申请
     public Leave inserLeave(Leave leave){
@@ -54,7 +56,12 @@ public class LeaveService {
      * @return
      */
     public List<Leave> queryAllLeave(String fromDate,String endDate){
-        return leaveDao.queryAllLeave(fromDate,endDate);
+        if(powerDao.queryViewAllLeavePowerById(UserBo.getUserBo().getPower())){
+            return leaveDao.queryAllLeave(fromDate,endDate);
+        }else {
+            return null;
+        }
+
     }
 
     /*** shuo***/

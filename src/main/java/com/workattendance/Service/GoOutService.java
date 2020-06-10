@@ -1,6 +1,7 @@
 package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.GoOutDao;
+import com.workattendance.Repository.dao.PowerDao;
 import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
@@ -17,6 +18,8 @@ public class GoOutService {
     private GoOutDao goOutDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private PowerDao powerDao;
 
     //外出申请
     public GoOut inserGoOut(GoOut goOut){

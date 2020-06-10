@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PowerService {
     @Autowired
     private PowerDao powerDao;
-    @Autowired
-    private UserBo userBo;
+
 
     //得到等级权限说明
     public Power getPower(String power){
