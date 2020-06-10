@@ -2,14 +2,10 @@ package com.workattendance.Service;
 
 import com.workattendance.Repository.dao.LeaveDao;
 import com.workattendance.Repository.dao.PowerDao;
-import com.workattendance.Repository.dao.UserDao;
 import com.workattendance.Repository.entity.Leave;
-import com.workattendance.Repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
