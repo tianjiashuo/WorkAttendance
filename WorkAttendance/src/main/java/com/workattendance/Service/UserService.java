@@ -67,9 +67,37 @@ public class UserService {
       return allState;
     }
 
-
     /***
-     * 请假到期后更新员工状态(定时函数:每天凌晨00：30运行)
+     * 请假/外出生效后更新员工状态(定时函数:每天凌晨00：25运行)
+     * @author shuo
+     * @return
+     */
+    @Scheduled(cron="0 25 0 1/1 * ? ")
+    public void updateUserStateStart(){
+        //获得当天00:00时间戳
+        long nowTime =System.currentTimeMillis();
+        long startTime = nowTime - ((nowTime + TimeZone.getDefault().getRawOffset()) % (24 * 60 * 60 * 1000L));
+        long endTime = startTime + 24*60*60*1000;
+        List<Leave> leaveList = leaveDao.queryAllLeave(convertTimeToString(startTime),convertTimeToString(endTime));
+        for (int i = 0; i < leaveList.size(); i++) {
+            if(convertTimeToLong(leaveList.get(i).getStart_time()) >= startTime &&convertTimeToLong(leaveList.get(i).getStart_time())<=endTime){
+                if(leaveDao.queryLeaveSalary(leaveList.get(i).getType())){
+                    userDao.updateUserStateByEmpNo(leaveList.get(i).getEmp_no(),"带薪休假");
+                }
+                else{
+                    userDao.updateUserStateByEmpNo(leaveList.get(i).getEmp_no(),"无薪休假");
+                }
+            }
+        }
+        List<GoOut> goOutList = goOutDao.queryAllGoOut(convertTimeToString(startTime),convertTimeToString(endTime));
+        for (int i = 0; i < goOutList.size(); i++) {
+            if(convertTimeToLong(goOutList.get(i).getStart_time()) >= startTime){
+                userDao.updateUserStateByEmpNo(goOutList.get(i).getEmp_no(),"外出");
+            }
+        }
+    }
+    /***
+     * 请假/外出到期后更新员工状态(定时函数:每天凌晨00：30运行)
      * @author shuo
      * @return
      */

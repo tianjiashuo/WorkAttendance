@@ -120,7 +120,7 @@ public class GoOutService {
         if(response.getState()){
             goOutDao.updategoOutManagerPass(id);
             goOutDao.updategoOutPass(id);
-            userDao.updateUserStateByEmpNo(goOut.getEmp_no(),"外出");
+//            userDao.updateUserStateByEmpNo(goOut.getEmp_no(),"外出");
         }
         else{
             goOutDao.updategoOutRefuse(id);

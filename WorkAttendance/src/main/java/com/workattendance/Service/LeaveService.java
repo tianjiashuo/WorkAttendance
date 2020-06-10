@@ -105,13 +105,14 @@ public class LeaveService {
                 leaveDao.updateLeaveVicePass(id);
                 leaveDao.updateLeavePass(id);
                 if(isSalary){
-                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+                    Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                    leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
                 }
-                else{
-                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
-                }
-                Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
-                leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+//                else{
+//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+//                }
+
             }
             else{
                 leaveDao.updateLeaveVicePass(id);
@@ -137,14 +138,14 @@ public class LeaveService {
                 leaveDao.updateLeaveManagerPass(id);
                 leaveDao.updateLeavePass(id);
                 if(isSalary){
-                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"带薪休假");
+                    Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
+                    Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
+                    leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
                 }
-                else{
-                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
-                }
-                Long days =  SecondtoDay(convertTimeToLong(leave.getEnd_time())-convertTimeToLong(leave.getStart_time()));
-                Long balances = leaveDao.queryLeaveBalance(leave.getEmp_no(),leave.getType())-days;
-                leaveDao.updateLeaveBalance(leave.getEmp_no(),leave.getType(),balances);
+//                else{
+//                    userDao.updateUserStateByEmpNo(leave.getEmp_no(),"无薪休假");
+//                }
             }
             else{
                 leaveDao.updateLeaveRefuse(id);
