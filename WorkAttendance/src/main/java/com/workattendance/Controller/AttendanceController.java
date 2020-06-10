@@ -32,7 +32,7 @@ public class AttendanceController {
 //    }
 
     /***
-     * 查询某人的打卡记录
+     * 查询自己的打卡记录
      * @author mao
      * @param
      * @return
@@ -43,7 +43,7 @@ public class AttendanceController {
     }
 
     /***
-     * 查询自己的打卡记录
+     * 查询某人的打卡记录
      * @author mao
      * @param
      * @return

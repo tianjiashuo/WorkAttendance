@@ -62,7 +62,7 @@ public class CheckService {
     }
 
     /***
-     * 每晚00：30更新check
+     * 每晚00：20更新check
      * @author shuo
      * @return
      */

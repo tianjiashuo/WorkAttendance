@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LogInController {
-    @Autowired
-    LogInService loginService;
-    @RequestMapping("/doLogin")
-    public String userLogin(@RequestBody UserVo user){
-        System.out.println("User : " + user);
-        String str = "error";
-        boolean bool =loginService.Login(user);
-        if (bool ) {
-            str = "ok";
+
+        @Autowired
+        LogInService loginService;
+        @RequestMapping("/doLogin")
+        public String userLogin(@RequestBody UserVo user) {
+            System.out.println("User : " + user);
+            String str = "error";
+            boolean bool = loginService.Login(user);
+            if (bool) {
+                str = "ok";
+            }
+            return str;
         }
-        return str;
-    }
 }

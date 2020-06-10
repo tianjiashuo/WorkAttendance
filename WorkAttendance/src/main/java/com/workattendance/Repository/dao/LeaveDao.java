@@ -2,14 +2,11 @@ package com.workattendance.Repository.dao;
 
 /*请假*/
 
-import com.workattendance.Repository.entity.GoOut;
 import com.workattendance.Repository.entity.Leave;
-import com.workattendance.Repository.mappers.GoOutRowMapper;
 import com.workattendance.Repository.mappers.LeaveRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,7 +16,11 @@ public class LeaveDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    //添加记录
+    /***
+     * 添加记录
+     * @author bai
+     * @return
+     */
     public Leave insert(Leave leave) {
         Leave leave1 = new Leave();
         String sql2 = "INSERT INTO leave_request (emp_no,emp_name,type,start_time,end_time,reason,state,division_manager_state,vice_manager_state,manager_state) VALUES(?, ?, ? ,?, ?, ?, ?, ?, ?, ?)";
@@ -29,27 +30,43 @@ public class LeaveDao {
         return leave1;
     }
 
-    //员工修改记录
+    /***
+     * 员工修改记录
+     * @author bai
+     * @return
+     */
     public Leave updateLeaveByid(int id,Leave leave){
         String sql = "UPDATE leave_request set type =? ,start_time=? ,end_time=? ,reason=? ,state=? ,division_manager_state=? ,vice_manager_state=? ,manager_state=?  WHERE id=?";
         jdbcTemplate.update(sql, leave.getType(),leave.getStart_time(),leave.getEnd_time(),leave.getReason(),false,false,false,false,id);
         return queryLeaveById(id);
     }
 
-    //根据员工编号删除记录
+    /***
+     * 根据id删除记录
+     * @author bai
+     * @return
+     */
     public void deleteLeaveById(int id) {
         String sql = "DELETE FROM leave_request WHERE id=?";
         jdbcTemplate.update(sql, id);
     }
 
-    //根据id查询
+    /***
+     * 根据id查询
+     * @author bai
+     * @return
+     */
     public Leave queryLeaveById(int id) {
         String sql = "SELECT * FROM leave_request WHERE id=?";
         Leave leave= jdbcTemplate.queryForObject(sql, new LeaveRowMapper(), id);
         return leave;
     }
 
-    //根据员工编号查询记录
+    /***
+     * 根据员工编号查询记录
+     * @author bai
+     * @return
+     */
     public List<Leave> queryLeaveByEmpNo(int emp_no) {
         String sql = "SELECT * FROM leave_request WHERE emp_no=? ORDER BY id";
         List<Leave> leaveList= jdbcTemplate.query(sql, new LeaveRowMapper(), emp_no);
@@ -61,6 +78,7 @@ public class LeaveDao {
      * 查询所有员工的请假情况
      * @param fromDate
      * @param endDate
+     * mao
      * @return
      */
     public List<Leave> queryAllLeave(String fromDate,String endDate) {
